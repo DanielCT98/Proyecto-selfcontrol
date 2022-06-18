@@ -11,25 +11,28 @@ app = Flask(__name__)
 db = SQL("sqlite:///prueba.db")
 
 @app.route("/")
+def index():
+    return render_template("layout.html")
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    if request.method == "GET":
-        return render_template("register.html")
-    usuario = request.form.get("username")
-    password = request.form.get("password")
-    correo = "a@a.com"
-    confirmacion = request.form.get("confirmation")
-    if password == "" or password != confirmacion:
-        return render_template("error.html")
-    db.execute("INSERT INTO usuario_uat (correo, usuario, pass) VALUES (?, ?, ?)", correo, usuario, password)
-    return redirect("/")
+    if request.method == "POST":
+        
+        usuario = request.form.get("username")
+        password = request.form.get("password")
+        correo = "a@a.com"
+        confirmacion = request.form.get("confirmation")
+        if password == "" or password != confirmacion:
+            return render_template("error.html")
+        db.execute("INSERT INTO usuario_uat (correo, usuario, pass) VALUES (?, ?, ?)", correo, usuario, password)
+    #return redirect("/")
+    return render_template("register.html")
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
 
-    session.clear()
+    #session.clear()
     if request.method == "POST":
         if not request.form.get("username"):
             return render_template("error.html")
@@ -45,6 +48,8 @@ def login():
 
     else:
         return render_template("login.html")
+
+
 
 
 
