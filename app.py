@@ -14,7 +14,7 @@ db = SQL("sqlite:///prueba.db")
 
 @app.route("/")
 def index():
-    return render_template("layout.html")
+    return render_template("principal.html")
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
