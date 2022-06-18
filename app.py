@@ -1,6 +1,8 @@
+from logging.handlers import TimedRotatingFileHandler
 import os
 
 from cs50 import SQL
+from flask_session import Session
 from flask import Flask, flash, redirect, render_template, request, session
 from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -44,14 +46,24 @@ def login():
             return render_template("error.html")
 
         session["id_usuario"] = rows[0]["id"]
-        return redirect("/")
+        return redirect("/resumen")
 
     else:
         return render_template("login.html")
 
 
-db.execute("SELECT * FROM usuario_uat WHERE usuario = ?")
+@app.route("/resumen")
+def graficos():
+    totales = db.execute("SELECT sum(monto) AS monto, categoria FROM egresos GROUP BY categoria")
 
+    categoria = []
+    val_totales = []
+
+    for i in totales:
+        categoria.append(i["categoria"])
+        val_totales.append(i["monto"])
+
+    return render_template("resumen.html",categoria=categoria, val_totales=val_totales)
 
 if __name__== '__main__':
     app.run()
