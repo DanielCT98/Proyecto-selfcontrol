@@ -1,0 +1,1 @@
+CREATE TABLE egresos (id_egreso INTEGER PRIMARY KEY, monto REAL, categoria TEXT) 

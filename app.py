@@ -43,18 +43,14 @@ def login():
         if len(rows) != 1 or not (rows[0]["pass"], request.form.get("password")):
             return render_template("error.html")
 
-        session["user_id"] = rows[0]["id"]
+        session["id_usuario"] = rows[0]["id"]
         return redirect("/")
 
     else:
         return render_template("login.html")
 
 
-
-
-
-
-
+db.execute("SELECT * FROM usuario_uat WHERE usuario = ?")
 
 
 if __name__== '__main__':
