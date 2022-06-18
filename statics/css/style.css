@@ -1,0 +1,58 @@
+* {
+    box-sizing: border-box;
+    margin: 0%;
+    padding: 0%;
+}
+
+.principal {
+    width: 100vw;
+    height: 100vh;
+    background: rgb(10, 189, 157);
+    background: linear-gradient(236deg, rgba(10, 189, 157, 1) 0%, rgba(8, 89, 93, 1) 99%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+
+.principal img {
+    width: 20%;
+}
+
+.selfcontrol {
+    color: rgba(255, 255, 255, 1);
+    font-family: Bellefair;
+    font-size: 120px;
+    text-align: center;
+}
+
+.rayita {
+
+    width: 35%;
+    height: 9px;
+    background: rgba(255, 255, 255, 1);
+    border-radius: 136px;
+    text-align: center;
+}
+.autocontrol {
+    color: rgba(255, 255, 255, 1);
+    margin-top: 0.5%;
+    margin-bottom: 0.5%;
+    font-family: Inter;
+    font-size: 200%;
+    text-align: center;
+}
+
+.button{
+    margin-top: 1.5%;
+    text-decoration: none;
+    font-size: 150%;
+    color: rgba(255, 255, 255, 1);
+    border: solid;
+    width: 20%;
+    padding: 0.5%;
+    border-radius: 45px;
+    text-align: center;
+}
