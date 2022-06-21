@@ -1,4 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
 
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Bellefair&display=swap" rel="stylesheet" />
+    <link href="/static/css/style.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="register">
+        <div class="principal">
+            <img src="../static/img/logo_blanco.png">
+            <p class="selfcontrol">$ELF CONTROL</p>
+            <div class="rayita"></div>
+            <span class="autocontrol">AUTOCONTROL FINACIERO</span>
+        </div>
+        <div class="espacio">
+            <p>REGISTER</p>
+            <form action="/register" method="post">
+                    <input autocomplete="off" autofocus class="campo" id="username" name="username" placeholder="Username" type="text">
+                    <input autocomplete="off" autofocus class="campo" id="correo" name="correo" placeholder="Correo" type="email">
+                    <input class="campo" id="password" name="password" placeholder="Password" type="password">
+                    <input class="campo" id="confirmation" name="confirmation" placeholder="Confirm Password" type="password">
+                <button class="button1" type="submit">Register</button>
+            </form>
+        </div>
+
+
+
+
+    </div>
+</body>
+
+</html>
 <!-- <form action="/register" method="post">
         <div class="mb-3">
             <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" placeholder="Username" type="text">
