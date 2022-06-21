@@ -52,6 +52,7 @@ def login():
         return render_template("login.html")
 
 
+#Funcion que crea el grafico de resumen de egresos
 @app.route("/resumen")
 def graficos():
     totales = db.execute("SELECT sum(monto) AS monto, categoria FROM egresos GROUP BY categoria")
@@ -64,6 +65,9 @@ def graficos():
         val_totales.append(i["monto"])
 
     return render_template("resumen.html",categoria=categoria, val_totales=val_totales)
+
+
+
 
 if __name__== '__main__':
     app.run()
