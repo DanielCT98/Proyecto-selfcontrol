@@ -1,4 +1,41 @@
-{% block title %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Bellefair&display=swap" rel="stylesheet" />
+    <link href="/static/css/style.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="loginregister">
+        <div class="principal">
+            <img src="../static/img/logo_blanco.png">
+            <p class="selfcontrol">$ELF CONTROL</p>
+            <div class="rayita"></div>
+            <span class="autocontrol">AUTOCONTROL FINACIERO</span>
+        </div>
+        <div class="espacio">
+            <p>LOG IN</p>
+            <form action="/login" method="post">
+                <input autocomplete="off" autofocus class="campo" id="username" name="username" placeholder="Username"
+                    type="text">
+                <input class="campo" id="password" name="password" placeholder="Password" type="password">
+                <button class="button1" type="submit">LOG IN</button>
+            </form>
+            <div class="cuenta">
+                <p> ¿No tienes cuenta? </p>
+                <a href="/register" class="buttonmini">
+                    REGISTER
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<!-- {% block title %}
     Log In
 {% endblock %}
 
@@ -12,4 +49,4 @@
         </div>
         <button class="btn btn-primary" type="submit">Log In</button>
     </form>
-{% endblock %}
+{% endblock %} -->

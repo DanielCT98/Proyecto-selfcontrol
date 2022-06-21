@@ -3,19 +3,20 @@
     margin: 0%;
     padding: 0%;
 }
-body{
+
+body {
     width: 100%;
     height: 100vh;
     background: rgb(10, 189, 157);
     background: linear-gradient(236deg, rgba(10, 189, 157, 1) 0%, rgba(8, 89, 93, 1) 99%);
 }
+
 .principal {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     background: transparent;
-
 }
 
 .principal img {
@@ -37,6 +38,7 @@ body{
     border-radius: 136px;
     text-align: center;
 }
+
 .autocontrol {
     color: rgba(255, 255, 255, 1);
     margin-top: 0.5%;
@@ -46,7 +48,7 @@ body{
     text-align: center;
 }
 
-.button{
+.button {
     margin-top: 1.5%;
     text-decoration: none;
     font-size: 150%;
@@ -58,7 +60,7 @@ body{
     text-align: center;
 }
 
-.register{
+.loginregister {
     width: 100%;
     height: 100vh;
     display: flex;
@@ -67,17 +69,18 @@ body{
     justify-content: center;
 }
 
-.register .principal p{
+.loginregister .principal p {
     font-size: 80px;
 }
-.register .principal{
+
+.loginregister .principal {
     background-repeat: no-repeat;
     height: 18%;
     margin-bottom: 8%;
     margin-top: 3%;
 }
 
-.espacio{
+.espacio {
     height: 50%;
     width: 25%;
     display: flex;
@@ -87,14 +90,16 @@ body{
     background-color: rgba(187, 196, 201, 00.5);
     border-radius: 15px;
 }
-.espacio p{
+
+.espacio p {
     font-family: Bellefair;
     font: bold;
     font-size: 200%;
-    color: rgba(11, 116, 120, 1); ;
+    color: rgba(11, 116, 120, 1);
+    ;
 }
 
-.espacio form{
+.espacio form {
     width: 80%;
     display: flex;
     flex-direction: column;
@@ -102,7 +107,7 @@ body{
     justify-content: center;
 }
 
-.campo{
+.campo {
     height: 15%;
     width: 70%;
     margin: 10px;
@@ -116,7 +121,7 @@ body{
     opacity: 50%;
 }
 
-.button1{
+.button1 {
     margin-top: 1.5%;
     text-decoration: none;
     font-family: Bellefair;
@@ -124,9 +129,42 @@ body{
     background-color: rgba(11, 116, 120, 1);
     color: rgb(187, 187, 187);
     border: none;
-    height: 15%;
+    height: 20%;
     width: 70%;
     padding: 3.5%;
+    border-radius: 45px;
+    text-align: center;
+}
+
+.espacio .cuenta {
+    margin-top: 3.5%;  
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    display: flex;
+    flex-direction:row;
+    align-items:center;
+    justify-content: center;
+}
+
+.espacio .cuenta p {
+    font-family: Bellefair;
+    font-size: small;
+    text-align: center;
+    color: rgb(62, 62, 62)
+}
+
+.buttonmini{
+    margin-left: 1%;
+    text-decoration: none;
+    font-family: Bellefair;
+    font-size: x-small;
+    background-color: rgba(11, 116, 120, 0.5);
+    color: rgb(187, 187, 187);
+    border: none;
+    height: 100%;
+    width: 15%;
+    padding: 0.75%;
     border-radius: 45px;
     text-align: center;
 }
