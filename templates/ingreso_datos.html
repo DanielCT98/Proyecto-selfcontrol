@@ -8,15 +8,15 @@
         <div class=""> 
             
             <select autofocus class="" name="ingreso_categoria" id="ingreso_categoria" placeholder="Categoria del ingreso"> <!--Lista desplegable para tipos de ingresos-->
-                <option value="Salario">Salario</option>
-                <option value="Mesada">Mesada</option>
-                <option value="Regalos">Regalos</option>
-                <option value="Otros">Otros</option>
+                <option value="1">Salario</option>
+                <option value="2">Mesada</option>
+                <option value="3">Regalos</option>
+                <option value="4">Otros</option>
             </select>
            
             <input autocomplete="off" autofocus class="" name="ingreso_monto" id="ingreso_monto" placeholder="Monto a ingresar" type="number" min="0.00"> <!--Ingresar el monto del ingreso-->
            
-            <select autofocus class="" name="moneda" id="moneda" placeholder="Moneda"> <!--Lista desplegable para monedas-->
+            <select autofocus class="" name="moneda_ing" id="moneda_ing" placeholder="Moneda"> <!--Lista desplegable para monedas-->
                 <option value="NIO">NIO</option>
                 <option value="USD">USD</option>
             </select>
@@ -27,43 +27,24 @@
         </div>
     </form>
 
-    <div> <!--Tabla de ingresos-->
-        <table class="">
-            <tr>
-              <th>Categoria</th>
-              <th>Monto</th>
-              <th>Moneda</th>
-              <th>Fecha</th>
-            </tr>
-
-            <tr>          
-              <td>asda</td>
-              <td>asda</td>
-              <td>asda</td>
-              <td>asda</td>
-            </tr>
-    
-          </table>
-    </div>
-
     <form action="/egresos" method="post"> <!--Form para el registro de egresos-->
     
         <div class=""> 
             
             <select autofocus class="" name="egreso_categoria" id="egreso_categoria" placeholder="Categoria del egreso"> <!--Lista desplegable para tipos de egresos-->
-                <option value="Comida">Comida</option>
-                <option value="Servicios basicos">Servicios basicos</option>
-                <option value="Universidad">Universidad</option>
-                <option value="Colegios">Colegios</option>
-                <option value="Familia">Familia</option>
-                <option value="Automovil">Automovil</option>
-                <option value="Supermercado">Supermercado</option>
-                <option value="Varios">Varios</option>
+                <option value="5">Comida</option>
+                <option value="6">Servicios basicos</option>
+                <option value="7">Universidad</option>
+                <option value="8">Colegios</option>
+                <option value="9">Familia</option>
+                <option value="10">Automovil</option>
+                <option value="11">Supermercado</option>
+                <option value="12">Varios</option>
             </select>
            
             <input autocomplete="off" autofocus class="" name="egreso_monto" id="egreso_monto" placeholder="Monto del egreso" type="number" min="0.00"> <!--Ingresar el monto del egreso-->
            
-            <select autofocus class="" name="moneda" id="moneda" placeholder="Moneda"> <!--Lista desplegable para monedas-->
+            <select autofocus class="" name="moneda_egr" id="moneda_egr" placeholder="Moneda"> <!--Lista desplegable para monedas-->
                 <option value="NIO">NIO</option>
                 <option value="USD">USD</option>
             </select>
@@ -74,40 +55,8 @@
         </div>
     </form>
 
-    <div> <!--Tabla de egresos-->
-        <table class="">
-            <tr>
-              <th>Categoria</th>
-              <th>Monto</th>
-              <th>Moneda</th>
-              <th>Fecha</th>
-            </tr>
-
-            <tr>          
-              <td>asda</td>
-              <td>asda</td>
-              <td>asda</td>
-              <td>asda</td>
-            </tr>
-    
-          </table>
-    </div>
-
     <form action="/cuentas" method="post">
         <input autocomplete="off" autofocus class="" name="cuenta_nombre" id="cuenta_nombre" placeholder="Ingrese el nombre de la cuenta" type="text">
         
         <button type="submit">Registrar cuenta</button>
     </form>
-
-    <div> <!--Tabla de cuentas-->
-        <table class="">
-            <tr>
-              <th>Cuentas creadas</th>
-            </tr>
-
-            <tr>          
-              <td>asdaasdasdasdadasd</td>
-            </tr>
-    
-          </table>
-    </div>

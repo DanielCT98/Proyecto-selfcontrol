@@ -7,20 +7,115 @@
     <title>Document</title>
 </head>
 <body>
+
+  <!--grafico de egresos-->
+
   <div style="width: 300px;">
-    <canvas id="graphics"></canvas>
+    <canvas id="grafico_egresos"></canvas>
+  </div>
+
+  <!--grafico de ingresos-->
+
+  <div style="width: 300px;">
+    <canvas id="grafico_ingresos"></canvas>
+  </div>
+
+  <!--Tabla de ingresos-->
+
+  <div> 
+    <table class="">
+        <tr>
+          <th>Categoria</th>
+          <th>Monto</th>
+          <th>Moneda</th>
+          <th>Fecha</th>
+        </tr>
+
+        <tr>          
+          <td>asda</td>
+          <td>asda</td>
+          <td>asda</td>
+          <td>asda</td>
+        </tr>
+
+      </table>
+</div>  
+
+  <!--Tabla de egresos-->
+
+  <div> 
+    <table class="">
+        <tr>
+          <th>Categoria</th>
+          <th>Monto</th>
+          <th>Moneda</th>
+          <th>Fecha</th>
+        </tr>
+
+        <tr>          
+          <td>asda</td>
+          <td>asda</td>
+          <td>asda</td>
+          <td>asda</td>
+        </tr>
+
+      </table>
+</div>
+
+<!--Tabla de cuentas-->
+
+<div> 
+    <table class="">
+        <tr>
+          <th>Cuentas creadas</th>
+        </tr>
+
+        <tr>          
+          <td>asdaasdasdasdadasd</td>
+        </tr>
+
+      </table>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!--Script para los egresos-->
 <script>
-    const ctx = document.getElementById('graphics').getContext('2d');
+    const ctx = document.getElementById('grafico_egresos').getContext('2d');
     const myChart = new Chart(ctx, {
     type: 'pie',
     data: {
-        labels: {{categoria | safe}},
+        labels: {{categoria_egresos | safe}},
         datasets: [{
             label: '# of Votes',
-            data: {{val_totales | safe}},
+            data: {{total_egresos | safe}},
+            backgroundColor: [
+                'rgb(255, 99, 132)',
+                'rgb(54, 162, 235)',
+                'rgb(255, 206, 86)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)'
+            ],
+            
+        }]
+    },
+    
+});
+</script>
+
+<!--Script para los ingresos-->
+<script>
+    const ctz = document.getElementById('grafico_ingresos').getContext('2d');
+    const myChart1 = new Chart(ctz, {
+    type: 'pie',
+    data: {
+        labels: {{categoria_ingresos | safe}},
+        datasets: [{
+            label: '# of Votes',
+            data: {{total_ingresos | safe}},
             backgroundColor: [
                 'rgb(255, 99, 132)',
                 'rgb(54, 162, 235)',
