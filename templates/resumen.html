@@ -8,6 +8,7 @@
 </head>
 <body>
 
+  <h1 href="/ingreso_datos">ingreso de datos</h1>
   <!--grafico de egresos-->
 
   <div style="width: 300px;">
@@ -66,14 +67,20 @@
 
 <div> 
     <table class="">
-        <tr>
-          <th>Cuentas creadas</th>
-        </tr>
+      
+      <thead>
+        <th>Cuentas creadas</th>
+      </thead>
+
+      <tbody>
+        {% for i in ultimas_cuentas %}
 
         <tr>          
-          <td>asdaasdasdasdadasd</td>
+          <td>{{i.nombre_cuenta}}</td>
         </tr>
+        {% endfor %}
 
+      </tbody>  
       </table>
 </div>
 

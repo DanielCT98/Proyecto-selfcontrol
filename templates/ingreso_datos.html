@@ -13,6 +13,12 @@
                 <option value="3">Regalos</option>
                 <option value="4">Otros</option>
             </select>
+
+            <select>
+                {% for i in cuentas %}
+                <option>{{ i.nombre_cuenta }}</option>
+                {% endfor %}
+            </select>
            
             <input autocomplete="off" autofocus class="" name="ingreso_monto" id="ingreso_monto" placeholder="Monto a ingresar" type="number" min="0.00"> <!--Ingresar el monto del ingreso-->
            
@@ -40,6 +46,12 @@
                 <option value="10">Automovil</option>
                 <option value="11">Supermercado</option>
                 <option value="12">Varios</option>
+            </select>
+
+            <select>
+                {% for i in cuentas %}
+                <option>{{ i.nombre_cuenta }}</option>
+                {% endfor %}
             </select>
            
             <input autocomplete="off" autofocus class="" name="egreso_monto" id="egreso_monto" placeholder="Monto del egreso" type="number" min="0.00"> <!--Ingresar el monto del egreso-->
