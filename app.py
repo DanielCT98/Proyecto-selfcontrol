@@ -1,4 +1,3 @@
-from logging.handlers import TimedRotatingFileHandler
 import os
 
 from cs50 import SQL
@@ -32,7 +31,7 @@ def register():
         confirmacion = request.form.get("confirmation")
         if password == "" or password != confirmacion:
             return render_template("error.html")
-        db.execute("INSERT INTO usuarios (correo, usuario, password) VALUES (?, ?, ?)", correo, usuario, password)
+        session["id_usuario"] = db.execute("INSERT INTO usuarios (correo, usuario, password) VALUES (?, ?, ?)", correo, usuario, password)
     return render_template("register.html")
 
 #Funcion para el inicio de sesion
@@ -58,107 +57,96 @@ def login():
 
 #Funcion que crea los graficos
 @app.route("/resumen")
-def graficos():
+def graficos_tablas():
 
 #a partir de aca se va a poblar la tabla de cuentas
 
-    # ultimas_cuentas = db.execute("SELECT _____ FROM _____ TOP 5 ORDER BY fecha ASC")
-    
-    # tabla_cuentas = []
-
-    # for i in ultimas_cuentas:
-    #     tabla_cuentas.append(i[""])
+    ultimas_cuentas = db.execute("SELECT nombre_cuenta FROM cuentas WHERE id_usuario = ? ORDER BY id_cuenta DESC LIMIT 5", session["id_usuario"])   
 
 #a partir de aca se va a poblar la tabla de resumen de egresos
 
-    # ultimos_egresos = db.execute("SELECT _____ FROM _____ TOP 5 ORDER BY fecha ASC")
-    
-    # tabla_egreso = []
-
-    # for i in ultimos_egresos:
-    #     tabla_egreso.append(i[""])
+    ultimos_egresos = db.execute("SELECT monto, mes, categoria_e FROM egresos, categoria_egresos WHERE id_usuario = ? AND egresos.id_categoria_egr = categoria_egresos.id_categoria_egr ORDER BY id_egreso DESC;", session["id_usuario"])   
 
 #a partir de aca se va a poblar la tabla de resumen de ingresos
 
-    # ultimos_ingresos = db.execute("SELECT _____ FROM _____ TOP 5 ORDER BY fecha ASC")
-    
-    # tabla_ingreso = []
-
-    # for i in ultimos_ingresos:
-    #     tabla_ingreso.append(i[""])
+    ultimos_ingresos = db.execute("SELECT monto, mes, categoria_i FROM ingresos, categoria_ingresos WHERE id_usuario = ? AND ingresos.id_categoria_ing = categoria_ingresos.id_categoria_ing ORDER BY id_ingreso DESC;", session["id_usuario"])   
 
 #a partir de aca se crea el grafico de resumen de egresos
 
-    totales_egr = db.execute("SELECT sum(egresos.monto) AS monto, categoria_egresos.categoria_e FROM egresos \
-                        JOIN categoria_egresos ON egresos.id_categoria_egr = categoria_egresos.id_categoria_egr \
-                        GROUP BY categoria_e")
+    totales_egr = db.execute("SELECT sum(monto), categoria_e FROM egresos, categoria_egresos WHERE id_usuario = ? AND egresos.id_categoria_egr = categoria_egresos.id_categoria_egr GROUP BY categoria_e;", session["id_usuario"])
 
-    categoria_egresos = [1,2,3]
-    total_egresos = [1,2,3]
+    categoria_egresos = []
+    total_egresos = []
 
     for i in totales_egr:
-        categoria_egresos.append(i["id_categoria_egr"])
-        total_egresos.append(i["monto"])
+        categoria_egresos.append(i["categoria_e"])
+        total_egresos.append(i["sum(monto)"])
 
 #a partir de aca se crea el grafico de resumen de ingresos
 
-    totales_ing = db.execute("SELECT sum(ingresos.monto) AS monto, categoria_ingresos.categoria_i FROM ingresos \
-                        JOIN categoria_ingresos ON ingresos.id_categoria_ing = categoria_ingresos.id_categoria_ing \
-                        GROUP BY categoria_i")
+    totales_ing = db.execute("SELECT sum(monto), categoria_i FROM ingresos, categoria_ingresos WHERE id_usuario = ? AND ingresos.id_categoria_ing = categoria_ingresos.id_categoria_ing GROUP BY categoria_i;", session["id_usuario"])
 
-    categoria_ingresos = [5,6,7]
-    total_ingresos = [5,6,7]
+    categoria_ingresos = []
+    total_ingresos = []
 
     for i in totales_ing:
-        categoria_ingresos.append(i["id_categoria_ing"])
-        total_ingresos.append(i["monto"])
+        categoria_ingresos.append(i["categoria_i"])
+        total_ingresos.append(i["sum(monto)"])
 
-    return render_template("resumen.html",categoria_ingresos=categoria_ingresos, total_ingresos=total_ingresos,categoria_egresos=categoria_egresos, total_egresos=total_egresos)
+#a partir de aca se crea el grafico de resumen mensual
+
+    mensuales_ing = db.execute("SELECT mes, sum(monto) FROM ingresos WHERE id_usuario = ? GROUP BY mes;", session["id_usuario"])
+
+    meses = []
+    ingresos_mes = []
+
+    for i in mensuales_ing:
+        meses.append(i["mes"])
+        ingresos_mes.append(i["sum(monto)"])
+
+    return render_template("resumen.html", meses=meses, ingresos_mes=ingresos_mes,categoria_ingresos=categoria_ingresos, total_ingresos=total_ingresos,categoria_egresos=categoria_egresos, total_egresos=total_egresos, ultimas_cuentas=ultimas_cuentas, ultimos_egresos=ultimos_egresos, ultimos_ingresos=ultimos_ingresos)
+
+#funcion para redirigir al ingreso de datos
+@app.route("/ingreso_datos")
+def registros():
+    cuentas = db.execute("SELECT nombre_cuenta FROM cuentas WHERE id_usuario = ? ORDER BY id_cuenta ASC;", session["id_usuario"])
+    
+    return render_template("ingreso_datos.html", cuentas=cuentas)
 
 #Funcion para registrar datos de ingresos
-@app.route("/ingreso_datos")
-def registro_ingresos():
-    
-    if request.method == "POST":
+@app.route("/ingresos", methods = ["POST"])
+def registro_ingresos():    
+
         ingreso = request.form.get("ingreso_categoria")
         monto_i = request.form.get("ingreso_monto")
         moneda_i = request.form.get("moneda_ing")
         fecha_i = request.form.get("ingreso_fecha")
+        cuenta_i = db.execute("SELECT id_cuenta FROM cuentas WHERE id_usuario = ? AND nombre_cuenta = ?;", session["id_usuario"], request.form.get("ingreso_cuenta"))
 
-        db.execute("INSERT INTO _______ VALUES (?,?,?,?)",ingreso, monto_i, moneda_i, fecha_i)
-        return render_template("ingreso_datos.html")
-
-    else:
-        return render_template("ingreso_datos.html")
+        db.execute("INSERT INTO ingresos (id_usuario, id_cuenta, id_categoria_ing, monto, moneda, mes) VALUES (?,?,?,?,?,?);",session["id_usuario"],cuenta_i,ingreso, monto_i, moneda_i, fecha_i)
+        return redirect("/ingreso_datos")
 
 #Funcion para registrar datos de egresos
-@app.route("/ingreso_datos")
+@app.route("/egresos", methods = ["POST"])
 def registro_egresos():
 
-    if request.method == "POST":
         egreso = request.form.get("egreso_categoria")
         monto_e = request.form.get("egreso_monto")
         moneda_e = request.form.get("moneda_egr")
         fecha_e = request.form.get("egreso_fecha")
+        cuenta_e = db.execute("SELECT id_cuenta FROM cuentas WHERE id_usuario = ? AND nombre_cuenta = ?;", session["id_usuario"], request.form.get("egreso_cuenta"))
 
-        db.execute("INSERT INTO _______ VALUES (?,?,?,?)",egreso, monto_e, moneda_e, fecha_e)
-        return render_template("ingreso_datos.html")
-
-    else:
+        db.execute("INSERT INTO egresos (id_usuario, id_cuenta, id_categoria_egr, monto, moneda, mes) VALUES (?,?,?,?,?,?);",session["id_usuario"],cuenta_e,egreso, monto_e, moneda_e, fecha_e)
         return render_template("ingreso_datos.html")
 
 #Funcion para registrar cuentas
-@app.route("/ingreso_datos")
+@app.route("/cuentas", methods = ["POST"])
 def registro_cuentas():
 
-    if request.method == "POST":
-        cuenta = request.form.get("cuenta_nombre")
+    cuenta = request.form.get("cuenta_nombre")
+    db.execute("INSERT INTO cuentas (id_usuario, nombre_cuenta) VALUES (?,?)", session["id_usuario"], cuenta)
+    return redirect("/ingreso_datos")
 
-        db.execute("INSERT INTO _______ VALUES (?)", cuenta)
-        return render_template("ingreso_datos.html")
-
-    else:
-        return render_template("ingreso_datos.html")
 
 if __name__== '__main__':
     app.run()

@@ -8,6 +8,8 @@
 </head>
 <body>
 
+  <a href={{url_for('registros')}}>ingreso_datos</a>
+
   <!--grafico de egresos-->
 
   <div style="width: 300px;">
@@ -20,45 +22,51 @@
     <canvas id="grafico_ingresos"></canvas>
   </div>
 
+    <!--grafico de mes-->
+
+    <div style="width: 600px;">
+      <canvas id="grafico_mes"></canvas>
+    </div>
+
   <!--Tabla de ingresos-->
 
   <div> 
+    
     <table class="">
         <tr>
           <th>Categoria</th>
           <th>Monto</th>
-          <th>Moneda</th>
-          <th>Fecha</th>
+          <th>Mes</th>
         </tr>
-
+        
+        {% for i in ultimos_ingresos%}
         <tr>          
-          <td>asda</td>
-          <td>asda</td>
-          <td>asda</td>
-          <td>asda</td>
+          <td>{{i["categoria_i"]}}</td>
+          <td>{{i["monto"]}}</td>
+          <td>{{i["mes"]}}</td>
         </tr>
-
-      </table>
+        {% endfor %}
+      </table>    
 </div>  
 
   <!--Tabla de egresos-->
 
   <div> 
+    
     <table class="">
         <tr>
           <th>Categoria</th>
           <th>Monto</th>
-          <th>Moneda</th>
-          <th>Fecha</th>
+          <th>Mes</th>
         </tr>
 
+        {% for i in ultimos_egresos%}
         <tr>          
-          <td>asda</td>
-          <td>asda</td>
-          <td>asda</td>
-          <td>asda</td>
+          <td>{{i["categoria_e"]}}</td>
+          <td>{{i["monto"]}}</td>
+          <td>{{i["mes"]}}</td>
         </tr>
-
+        {% endfor %}
       </table>
 </div>
 
@@ -66,15 +74,20 @@
 
 <div> 
     <table class="">
-        <tr>
-          <th>Cuentas creadas</th>
-        </tr>
+      
+      <thead>
+        <th>Cuentas creadas</th>
+      </thead>
 
+      <tbody>
+        {% for i in ultimas_cuentas %}
         <tr>          
-          <td>asdaasdasdasdadasd</td>
+          <td>{{i.nombre_cuenta}}</td>
         </tr>
-
-      </table>
+        {% endfor %}
+      </tbody>  
+      
+    </table>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -130,6 +143,29 @@
         }]
     },
     
+});
+</script>
+
+<!--Script para los meses-->
+<script>
+  const cty = document.getElementById('grafico_mes').getContext('2d');
+  const myChart2 = new Chart(cty, {
+  type: 'bar',
+  data: {
+      labels: {{ meses | safe}},
+      datasets: [{
+          label: 'Ingresos',
+          data: {{ingresos_mes | safe}},
+          backgroundColor: [
+              'rgb(255, 99, 132)'
+          ],
+          borderColor: [
+              'rgba(255, 99, 132, 1)'
+          ],
+          
+      }]
+  },
+  
 });
 </script>
 

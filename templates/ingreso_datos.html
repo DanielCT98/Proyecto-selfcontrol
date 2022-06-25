@@ -3,6 +3,9 @@
 {% endblock %}
 
 {% block main %}
+
+    <a href={{url_for('graficos_tablas')}}>Resumen</a>
+
     <form action="/ingresos" method="post"> <!--Form para el registro de ingresos-->
     
         <div class=""> 
@@ -13,6 +16,12 @@
                 <option value="3">Regalos</option>
                 <option value="4">Otros</option>
             </select>
+
+            <select name="ingreso_cuenta" id="ingreso_cuenta">
+                {% for i in cuentas %}
+                <option>{{ i.nombre_cuenta }}</option>
+                {% endfor %}
+            </select>
            
             <input autocomplete="off" autofocus class="" name="ingreso_monto" id="ingreso_monto" placeholder="Monto a ingresar" type="number" min="0.00"> <!--Ingresar el monto del ingreso-->
            
@@ -21,8 +30,21 @@
                 <option value="USD">USD</option>
             </select>
            
-            <input autofocus class="" name="ingreso_fecha" id="ingreso_fecha" placeholder="Fecha del ingreso" type="date"> <!--Ingreso de fecha-->
-           
+            <select autofocus class="" name="ingreso_fecha" id="ingreso_fecha" placeholder="Mes del ingreso"> <!--Ingreso de fecha-->
+                <option value="ENERO">ENERO</option>
+                <option value="FEBRERO">FEBRERO</option>
+                <option value="MARZO">MARZO</option>
+                <option value="ABRIL">ABRIL</option>
+                <option value="MAYO">MAYO</option>
+                <option value="JUNIO">JUNIO</option>
+                <option value="JULIO">JULIO</option>
+                <option value="AGOSTO">AGOSTO</option>
+                <option value="SEPTIEMBRE">SEPTIEMBRE</option>
+                <option value="OCTUBRE">OCTUBRE</option>
+                <option value="NOVIEMBRE">NOVIEMBRE</option>
+                <option value="DICIEMBRE">DICIEMBRE</option>
+            </select>
+
             <button type="submit">Registrar Ingreso</button>
         </div>
     </form>
@@ -41,6 +63,12 @@
                 <option value="11">Supermercado</option>
                 <option value="12">Varios</option>
             </select>
+
+            <select name="egreso_cuenta" id="egreso_cuenta">
+                {% for i in cuentas %}
+                <option>{{ i.nombre_cuenta }}</option>
+                {% endfor %}
+            </select>
            
             <input autocomplete="off" autofocus class="" name="egreso_monto" id="egreso_monto" placeholder="Monto del egreso" type="number" min="0.00"> <!--Ingresar el monto del egreso-->
            
@@ -49,7 +77,20 @@
                 <option value="USD">USD</option>
             </select>
            
-            <input autofocus class="" name="egreso_fecha" id="egreso_fecha" placeholder="Fecha del egreso" type="date"> <!--Ingreso de fecha-->
+            <select autofocus class="" name="egreso_fecha" id="egreso_fecha" placeholder="Mes del egreso"> <!--egreso de fecha-->
+                <option value="ENERO">ENERO</option>
+                <option value="FEBRERO">FEBRERO</option>
+                <option value="MARZO">MARZO</option>
+                <option value="ABRIL">ABRIL</option>
+                <option value="MAYO">MAYO</option>
+                <option value="JUNIO">JUNIO</option>
+                <option value="JULIO">JULIO</option>
+                <option value="AGOSTO">AGOSTO</option>
+                <option value="SEPTIEMBRE">SEPTIEMBRE</option>
+                <option value="OCTUBRE">OCTUBRE</option>
+                <option value="NOVIEMBRE">NOVIEMBRE</option>
+                <option value="DICIEMBRE">DICIEMBRE</option>
+            </select>
            
             <button type="submit">Registrar egreso</button>
         </div>
@@ -60,3 +101,5 @@
         
         <button type="submit">Registrar cuenta</button>
     </form>
+
+{% endblock %}
