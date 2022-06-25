@@ -30,7 +30,7 @@
 
 -- SELECT id_categoria_egr, sum(monto) FROM egresos WHERE id_usuario = 1  GROUP BY id_categoria_egr;
 
-SELECT sum(monto), categoria_e FROM egresos, categoria_egresos WHERE id_usuario = 1 AND egresos.id_categoria_egr = categoria_egresos.id_categoria_egr GROUP BY categoria_e;
+-- SELECT sum(monto), categoria_e FROM egresos, categoria_egresos WHERE id_usuario = 1 AND egresos.id_categoria_egr = categoria_egresos.id_categoria_egr GROUP BY categoria_e;
 
 -- SELECT sum(monto), categoria_i FROM ingresos, categoria_ingresos WHERE id_usuario = 1 AND ingresos.id_categoria_ing = categoria_ingresos.id_categoria_ing GROUP BY categoria_i;
 
@@ -39,3 +39,13 @@ SELECT sum(monto), categoria_e FROM egresos, categoria_egresos WHERE id_usuario 
 -- SELECT mes, sum(monto) FROM ingresos WHERE id_usuario = 1 GROUP BY mes;
 
 -- SELECT mes, sum(monto) FROM egresos WHERE id_usuario = 1 GROUP BY mes;
+
+-- SELECT nombre_cuenta, sum(monto) as "Ingresos" FROM cuentas, ingresos WHERE ingresos.id_usuario = 1 AND cuentas.id_cuenta = ingresos.id_cuenta GROUP BY nombre_cuenta;
+
+-- SELECT nombre_cuenta, sum(monto) as "Egresos" FROM cuentas, egresos WHERE egresos.id_usuario = 1 AND cuentas.id_cuenta = egresos.id_cuenta GROUP BY nombre_cuenta;
+
+SELECT sum(monto) AS 'Total de ingresos' FROM ingresos WHERE id_usuario = 1;
+
+SELECT sum(monto) AS 'Total de egresos' FROM egresos WHERE id_usuario = 1;
+
+
