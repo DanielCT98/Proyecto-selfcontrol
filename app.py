@@ -122,8 +122,9 @@ def registro_ingresos():
         moneda_i = request.form.get("moneda_ing")
         fecha_i = request.form.get("ingreso_fecha")
         cuenta_i = db.execute("SELECT id_cuenta FROM cuentas WHERE id_usuario = ? AND nombre_cuenta = ?;", session["id_usuario"], request.form.get("ingreso_cuenta"))
+        cuenta_ing = cuenta_i[0]["id_cuenta"]
 
-        db.execute("INSERT INTO ingresos (id_usuario, id_cuenta, id_categoria_ing, monto, moneda, mes) VALUES (?,?,?,?,?,?);",session["id_usuario"],cuenta_i,ingreso, monto_i, moneda_i, fecha_i)
+        db.execute("INSERT INTO ingresos (id_usuario, id_cuenta, id_categoria_ing, monto, moneda, mes) VALUES (?,?,?,?,?,?);",session["id_usuario"],cuenta_ing,ingreso, monto_i, moneda_i, fecha_i)
         return redirect("/ingreso_datos")
 
 #Funcion para registrar datos de egresos
@@ -135,8 +136,9 @@ def registro_egresos():
         moneda_e = request.form.get("moneda_egr")
         fecha_e = request.form.get("egreso_fecha")
         cuenta_e = db.execute("SELECT id_cuenta FROM cuentas WHERE id_usuario = ? AND nombre_cuenta = ?;", session["id_usuario"], request.form.get("egreso_cuenta"))
+        cuenta_egr = cuenta_e[0]["id_cuenta"]
 
-        db.execute("INSERT INTO egresos (id_usuario, id_cuenta, id_categoria_egr, monto, moneda, mes) VALUES (?,?,?,?,?,?);",session["id_usuario"],cuenta_e,egreso, monto_e, moneda_e, fecha_e)
+        db.execute("INSERT INTO egresos (id_usuario, id_cuenta, id_categoria_egr, monto, moneda, mes) VALUES (?,?,?,?,?,?);",session["id_usuario"],int(cuenta_egr),egreso, monto_e, moneda_e, fecha_e)
         return render_template("ingreso_datos.html")
 
 #Funcion para registrar cuentas
