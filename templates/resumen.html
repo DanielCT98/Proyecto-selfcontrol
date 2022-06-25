@@ -22,6 +22,12 @@
     <canvas id="grafico_ingresos"></canvas>
   </div>
 
+    <!--grafico de mes-->
+
+    <div style="width: 600px;">
+      <canvas id="grafico_mes"></canvas>
+    </div>
+
   <!--Tabla de ingresos-->
 
   <div> 
@@ -137,6 +143,29 @@
         }]
     },
     
+});
+</script>
+
+<!--Script para los meses-->
+<script>
+  const cty = document.getElementById('grafico_mes').getContext('2d');
+  const myChart2 = new Chart(cty, {
+  type: 'bar',
+  data: {
+      labels: {{ meses | safe}},
+      datasets: [{
+          label: 'Ingresos',
+          data: {{ingresos_mes | safe}},
+          backgroundColor: [
+              'rgb(255, 99, 132)'
+          ],
+          borderColor: [
+              'rgba(255, 99, 132, 1)'
+          ],
+          
+      }]
+  },
+  
 });
 </script>
 

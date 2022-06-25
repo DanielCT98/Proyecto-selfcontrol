@@ -93,7 +93,18 @@ def graficos_tablas():
         categoria_ingresos.append(i["categoria_i"])
         total_ingresos.append(i["sum(monto)"])
 
-    return render_template("resumen.html",categoria_ingresos=categoria_ingresos, total_ingresos=total_ingresos,categoria_egresos=categoria_egresos, total_egresos=total_egresos, ultimas_cuentas=ultimas_cuentas, ultimos_egresos=ultimos_egresos, ultimos_ingresos=ultimos_ingresos)
+#a partir de aca se crea el grafico de resumen mensual
+
+    mensuales_ing = db.execute("SELECT mes, sum(monto) FROM ingresos WHERE id_usuario = ? GROUP BY mes;", session["id_usuario"])
+
+    meses = []
+    ingresos_mes = []
+
+    for i in mensuales_ing:
+        meses.append(i["mes"])
+        ingresos_mes.append(i["sum(monto)"])
+
+    return render_template("resumen.html", meses=meses, ingresos_mes=ingresos_mes,categoria_ingresos=categoria_ingresos, total_ingresos=total_ingresos,categoria_egresos=categoria_egresos, total_egresos=total_egresos, ultimas_cuentas=ultimas_cuentas, ultimos_egresos=ultimos_egresos, ultimos_ingresos=ultimos_ingresos)
 
 #funcion para redirigir al ingreso de datos
 @app.route("/ingreso_datos")
