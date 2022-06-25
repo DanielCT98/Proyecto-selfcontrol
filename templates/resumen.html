@@ -8,7 +8,23 @@
 </head>
 <body>
 
-  <a href={{url_for('registros')}}>ingreso_datos</a>
+  <a href={{url_for('registros')}}> ingreso_datos </a>
+
+  <!--Total de ingresos-->
+  <div>
+    <h2>Total de ingresos</h2>
+    <h3>{{ consolidado_ingresos[0]["Total de ingresos"] }}</h3>
+  </div>
+  <!--Total de egresos-->
+  <div>
+    <h2>Total de egresos</h2>
+    <h3>{{ consolidado_egresos[0]["Total de egresos"] }}</h3>
+  </div>
+  <!--saldo-->
+  <div>
+    <h2>Balance</h2>
+    <h3>{{ saldo[0] }}</h3>
+  </div>
 
   <!--grafico de egresos-->
 
@@ -26,6 +42,15 @@
 
     <div style="width: 600px;">
       <canvas id="grafico_mes"></canvas>
+    </div>
+
+    <!--cuentas y sus saldos-->
+
+    <div>
+      {% for i in resumen_cuentas %}          
+        <h2>{{[i][0]}}</h2>
+        <h3>{{[i][1]}}</h3>
+      {% endfor %}
     </div>
 
   <!--Tabla de ingresos-->
@@ -100,7 +125,7 @@
     data: {
         labels: {{categoria_egresos | safe}},
         datasets: [{
-            label: '# of Votes',
+            label: 'categoria',
             data: {{total_egresos | safe}},
             backgroundColor: [
                 'rgb(255, 99, 132)',
@@ -127,7 +152,7 @@
     data: {
         labels: {{categoria_ingresos | safe}},
         datasets: [{
-            label: '# of Votes',
+            label: 'categoria',
             data: {{total_ingresos | safe}},
             backgroundColor: [
                 'rgb(255, 99, 132)',

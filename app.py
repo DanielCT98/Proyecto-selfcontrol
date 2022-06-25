@@ -59,6 +59,29 @@ def login():
 @app.route("/resumen")
 def graficos_tablas():
 
+    resumen_ingresos = db.execute("SELECT nombre_cuenta, sum(monto) as 'Ingresos' FROM cuentas, ingresos WHERE ingresos.id_usuario = ? AND cuentas.id_cuenta = ingresos.id_cuenta GROUP BY nombre_cuenta;", session["id_usuario"])
+
+    resumen_egresos = db.execute("SELECT nombre_cuenta, sum(monto) as 'Egresos' FROM cuentas, egresos WHERE egresos.id_usuario = ? AND cuentas.id_cuenta = egresos.id_cuenta GROUP BY nombre_cuenta;", session["id_usuario"])
+
+    resumen_cuentas = []
+
+    for i,j in zip(resumen_ingresos, resumen_egresos):
+        
+        if i["nombre_cuenta"] == j["nombre_cuenta"]:
+            resumen_cuentas.append(i["nombre_cuenta"])
+            resumen_cuentas.append(i["Ingresos"] - j["Egresos"])
+
+    consolidado_ingresos = db.execute("SELECT sum(monto) AS 'Total de ingresos' FROM ingresos WHERE id_usuario = ?;", session["id_usuario"])
+    consolidado_egresos = db.execute("SELECT sum(monto) AS 'Total de egresos' FROM egresos WHERE id_usuario = ?;", session["id_usuario"])
+
+    saldo= []
+
+    for k,l in zip(consolidado_ingresos, consolidado_egresos):
+        saldo.append(k["Total de ingresos"] - l["Total de egresos"])
+
+    print(saldo)
+
+
 #a partir de aca se va a poblar la tabla de cuentas
 
     ultimas_cuentas = db.execute("SELECT nombre_cuenta FROM cuentas WHERE id_usuario = ? ORDER BY id_cuenta DESC LIMIT 5", session["id_usuario"])   
@@ -104,7 +127,7 @@ def graficos_tablas():
         meses.append(i["mes"])
         ingresos_mes.append(i["sum(monto)"])
 
-    return render_template("resumen.html", meses=meses, ingresos_mes=ingresos_mes,categoria_ingresos=categoria_ingresos, total_ingresos=total_ingresos,categoria_egresos=categoria_egresos, total_egresos=total_egresos, ultimas_cuentas=ultimas_cuentas, ultimos_egresos=ultimos_egresos, ultimos_ingresos=ultimos_ingresos)
+    return render_template("resumen.html", saldo=saldo ,consolidado_ingresos = consolidado_ingresos ,consolidado_egresos = consolidado_egresos ,resumen_cuentas = resumen_cuentas, meses=meses, ingresos_mes=ingresos_mes,categoria_ingresos=categoria_ingresos, total_ingresos=total_ingresos,categoria_egresos=categoria_egresos, total_egresos=total_egresos, ultimas_cuentas=ultimas_cuentas, ultimos_egresos=ultimos_egresos, ultimos_ingresos=ultimos_ingresos)
 
 #funcion para redirigir al ingreso de datos
 @app.route("/ingreso_datos")
@@ -122,8 +145,9 @@ def registro_ingresos():
         moneda_i = request.form.get("moneda_ing")
         fecha_i = request.form.get("ingreso_fecha")
         cuenta_i = db.execute("SELECT id_cuenta FROM cuentas WHERE id_usuario = ? AND nombre_cuenta = ?;", session["id_usuario"], request.form.get("ingreso_cuenta"))
+        cuenta_ing = cuenta_i[0]["id_cuenta"]
 
-        db.execute("INSERT INTO ingresos (id_usuario, id_cuenta, id_categoria_ing, monto, moneda, mes) VALUES (?,?,?,?,?,?);",session["id_usuario"],cuenta_i,ingreso, monto_i, moneda_i, fecha_i)
+        db.execute("INSERT INTO ingresos (id_usuario, id_cuenta, id_categoria_ing, monto, moneda, mes) VALUES (?,?,?,?,?,?);",session["id_usuario"],cuenta_ing,ingreso, monto_i, moneda_i, fecha_i)
         return redirect("/ingreso_datos")
 
 #Funcion para registrar datos de egresos
@@ -135,8 +159,9 @@ def registro_egresos():
         moneda_e = request.form.get("moneda_egr")
         fecha_e = request.form.get("egreso_fecha")
         cuenta_e = db.execute("SELECT id_cuenta FROM cuentas WHERE id_usuario = ? AND nombre_cuenta = ?;", session["id_usuario"], request.form.get("egreso_cuenta"))
+        cuenta_egr = cuenta_e[0]["id_cuenta"]
 
-        db.execute("INSERT INTO egresos (id_usuario, id_cuenta, id_categoria_egr, monto, moneda, mes) VALUES (?,?,?,?,?,?);",session["id_usuario"],cuenta_e,egreso, monto_e, moneda_e, fecha_e)
+        db.execute("INSERT INTO egresos (id_usuario, id_cuenta, id_categoria_egr, monto, moneda, mes) VALUES (?,?,?,?,?,?);",session["id_usuario"],int(cuenta_egr),egreso, monto_e, moneda_e, fecha_e)
         return render_template("ingreso_datos.html")
 
 #Funcion para registrar cuentas
