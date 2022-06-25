@@ -8,7 +8,8 @@
 </head>
 <body>
 
-  <h1 href="/ingreso_datos">ingreso de datos</h1>
+  <a href={{url_for('registros')}}>ingreso_datos</a>
+
   <!--grafico de egresos-->
 
   <div style="width: 300px;">
@@ -24,42 +25,42 @@
   <!--Tabla de ingresos-->
 
   <div> 
+    
     <table class="">
         <tr>
           <th>Categoria</th>
           <th>Monto</th>
-          <th>Moneda</th>
-          <th>Fecha</th>
+          <th>Mes</th>
         </tr>
-
+        
+        {% for i in ultimos_ingresos%}
         <tr>          
-          <td>asda</td>
-          <td>asda</td>
-          <td>asda</td>
-          <td>asda</td>
+          <td>{{i["categoria_i"]}}</td>
+          <td>{{i["monto"]}}</td>
+          <td>{{i["mes"]}}</td>
         </tr>
-
-      </table>
+        {% endfor %}
+      </table>    
 </div>  
 
   <!--Tabla de egresos-->
 
   <div> 
+    
     <table class="">
         <tr>
           <th>Categoria</th>
           <th>Monto</th>
-          <th>Moneda</th>
-          <th>Fecha</th>
+          <th>Mes</th>
         </tr>
 
+        {% for i in ultimos_egresos%}
         <tr>          
-          <td>asda</td>
-          <td>asda</td>
-          <td>asda</td>
-          <td>asda</td>
+          <td>{{i["categoria_e"]}}</td>
+          <td>{{i["monto"]}}</td>
+          <td>{{i["mes"]}}</td>
         </tr>
-
+        {% endfor %}
       </table>
 </div>
 
@@ -74,14 +75,13 @@
 
       <tbody>
         {% for i in ultimas_cuentas %}
-
         <tr>          
           <td>{{i.nombre_cuenta}}</td>
         </tr>
         {% endfor %}
-
       </tbody>  
-      </table>
+      
+    </table>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

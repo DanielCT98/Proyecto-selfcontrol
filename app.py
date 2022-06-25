@@ -61,18 +61,15 @@ def graficos_tablas():
 
 #a partir de aca se va a poblar la tabla de cuentas
 
-    ultimas_cuentas = db.execute("SELECT nombre_cuenta FROM cuentas WHERE id_usuario = ? ORDER BY id_cuenta DESC LIMIT 5", session["id_usuario"])
-    
+    ultimas_cuentas = db.execute("SELECT nombre_cuenta FROM cuentas WHERE id_usuario = ? ORDER BY id_cuenta DESC LIMIT 5", session["id_usuario"])   
 
 #a partir de aca se va a poblar la tabla de resumen de egresos
 
-    ultimos_egresos = db.execute("SELECT monto, mes, categoria_e FROM egresos, categoria_egresos WHERE id_usuario = ? AND egresos.id_categoria_egr = categoria_egresos.id_categoria_egr ORDER BY id_egreso DESC;", session["id_usuario"])
-    
+    ultimos_egresos = db.execute("SELECT monto, mes, categoria_e FROM egresos, categoria_egresos WHERE id_usuario = ? AND egresos.id_categoria_egr = categoria_egresos.id_categoria_egr ORDER BY id_egreso DESC;", session["id_usuario"])   
 
 #a partir de aca se va a poblar la tabla de resumen de ingresos
 
-    ultimos_ingresos = db.execute("SELECT monto, mes, categoria_i FROM ingresos, categoria_ingresos WHERE id_usuario = ? AND ingresos.id_categoria_ing = categoria_ingresos.id_categoria_ing ORDER BY id_ingreso DESC;", session["id_usuario"])
-    
+    ultimos_ingresos = db.execute("SELECT monto, mes, categoria_i FROM ingresos, categoria_ingresos WHERE id_usuario = ? AND ingresos.id_categoria_ing = categoria_ingresos.id_categoria_ing ORDER BY id_ingreso DESC;", session["id_usuario"])   
 
 #a partir de aca se crea el grafico de resumen de egresos
 
@@ -98,38 +95,37 @@ def graficos_tablas():
 
     return render_template("resumen.html",categoria_ingresos=categoria_ingresos, total_ingresos=total_ingresos,categoria_egresos=categoria_egresos, total_egresos=total_egresos, ultimas_cuentas=ultimas_cuentas, ultimos_egresos=ultimos_egresos, ultimos_ingresos=ultimos_ingresos)
 
-#Funcion para registrar datos de ingresos
+#funcion para redirigir al ingreso de datos
 @app.route("/ingreso_datos")
-def registro_ingresos():
+def registros():
+    cuentas = db.execute("SELECT nombre_cuenta FROM cuentas WHERE id_usuario = ? ORDER BY id_cuenta ASC;", session["id_usuario"])
     
-    cuentas = db.execute("SELECT nombre_cuenta FROM cuentas WHERE id_usuario = ? ORDER BY id_cuenta ASC", session["id_usuario"])
+    return render_template("ingreso_datos.html", cuentas=cuentas)
 
-    if request.method == "POST":
+#Funcion para registrar datos de ingresos
+@app.route("/ingresos", methods = ["POST"])
+def registro_ingresos():    
+
         ingreso = request.form.get("ingreso_categoria")
         monto_i = request.form.get("ingreso_monto")
         moneda_i = request.form.get("moneda_ing")
         fecha_i = request.form.get("ingreso_fecha")
+        cuenta_i = db.execute("SELECT id_cuenta FROM cuentas WHERE id_usuario = ? AND nombre_cuenta = ?;", session["id_usuario"], request.form.get("ingreso_cuenta"))
 
-        db.execute("INSERT INTO _______ VALUES (?,?,?,?)",ingreso, monto_i, moneda_i, fecha_i)
-        return render_template("ingreso_datos.html")
-
-    else:
-        return render_template("ingreso_datos.html",cuentas=cuentas)
+        db.execute("INSERT INTO ingresos (id_usuario, id_cuenta, id_categoria_ing, monto, moneda, mes) VALUES (?,?,?,?,?,?);",session["id_usuario"],cuenta_i,ingreso, monto_i, moneda_i, fecha_i)
+        return redirect("/ingreso_datos")
 
 #Funcion para registrar datos de egresos
-@app.route("/ingreso_datos")
+@app.route("/egresos", methods = ["POST"])
 def registro_egresos():
 
-    if request.method == "POST":
         egreso = request.form.get("egreso_categoria")
         monto_e = request.form.get("egreso_monto")
         moneda_e = request.form.get("moneda_egr")
         fecha_e = request.form.get("egreso_fecha")
+        cuenta_e = db.execute("SELECT id_cuenta FROM cuentas WHERE id_usuario = ? AND nombre_cuenta = ?;", session["id_usuario"], request.form.get("egreso_cuenta"))
 
-        db.execute("INSERT INTO _______ VALUES (?,?,?,?)",egreso, monto_e, moneda_e, fecha_e)
-        return render_template("ingreso_datos.html")
-
-    else:
+        db.execute("INSERT INTO egresos (id_usuario, id_cuenta, id_categoria_egr, monto, moneda, mes) VALUES (?,?,?,?,?,?);",session["id_usuario"],cuenta_e,egreso, monto_e, moneda_e, fecha_e)
         return render_template("ingreso_datos.html")
 
 #Funcion para registrar cuentas
@@ -137,8 +133,7 @@ def registro_egresos():
 def registro_cuentas():
 
     cuenta = request.form.get("cuenta_nombre")
-
-    db.execute("INSERT INTO cuentas VALUES (?,?)", session["id_usuario"], cuenta)
+    db.execute("INSERT INTO cuentas (id_usuario, nombre_cuenta) VALUES (?,?)", session["id_usuario"], cuenta)
     return redirect("/ingreso_datos")
 
 
