@@ -1,4 +1,5 @@
 import os
+from xml.etree.ElementTree import TreeBuilder
 
 from cs50 import SQL
 from flask_session import Session
@@ -9,9 +10,13 @@ from werkzeug.exceptions import default_exceptions, HTTPException, InternalServe
 
 app = Flask(__name__)
 
+# Configure session to use filesystem (instead of signed cookies)
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
+
 #conexion a la base de datos
 db = SQL("sqlite:///selfcontrol.db")
-
 #clave secreta para que funcione
 app.secret_key = 'super secret key'
 
@@ -32,6 +37,7 @@ def register():
         if password == "" or password != confirmacion:
             return render_template("error.html")
         session["id_usuario"] = db.execute("INSERT INTO usuarios (correo, usuario, password) VALUES (?, ?, ?)", correo, usuario, password)
+        session["usuario_dato"]=usuario
     return render_template("register.html")
 
 #Funcion para el inicio de sesion
@@ -49,6 +55,7 @@ def login():
             return render_template("error.html")
 
         session["id_usuario"] = rows[0]["id_usuario"]
+        session["usuario_dato"]= request.form.get("username")
         return redirect("/resumen")
 
     else:
@@ -128,7 +135,7 @@ def graficos_tablas():
         meses.append(i["mes"])
         ingresos_mes.append(i["sum(monto)"])
 
-    return render_template("resumen.html", saldo=saldo ,consolidado_ingresos = consolidado_ingresos ,consolidado_egresos = consolidado_egresos ,resumen_cuentas = resumen_cuentas, meses=meses, ingresos_mes=ingresos_mes,categoria_ingresos=categoria_ingresos, total_ingresos=total_ingresos,categoria_egresos=categoria_egresos, total_egresos=total_egresos, ultimas_cuentas=ultimas_cuentas, ultimos_egresos=ultimos_egresos, ultimos_ingresos=ultimos_ingresos)
+    return render_template("resumen.html",usuario=session["usuario_dato"], saldo=saldo ,consolidado_ingresos = consolidado_ingresos ,consolidado_egresos = consolidado_egresos ,resumen_cuentas = resumen_cuentas, meses=meses, ingresos_mes=ingresos_mes,categoria_ingresos=categoria_ingresos, total_ingresos=total_ingresos,categoria_egresos=categoria_egresos, total_egresos=total_egresos, ultimas_cuentas=ultimas_cuentas, ultimos_egresos=ultimos_egresos, ultimos_ingresos=ultimos_ingresos)
 
 #funcion para redirigir al ingreso de datos
 @app.route("/ingreso_datos")

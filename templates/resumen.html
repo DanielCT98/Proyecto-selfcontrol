@@ -1,12 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{%extends"layout.html"%}
+
+{%block contenido%}
+
+<div class="p-4">
+  <div class="welcome">
+      <div class="content rounded-3 p-3">
+          <h1 class="fs-3">Welcome {{usuario}}</h1>
+          <p class="mb-0">Hello {{usuario}}, welcome to your awesome dashboard!</p>
+      </div>
+  </div>
 
   <a href={{url_for('registros')}}> ingreso_datos </a>
 
@@ -213,7 +215,4 @@
   
 });
 </script>
-
-</body>
-
-</html>
+{%endblock%}
