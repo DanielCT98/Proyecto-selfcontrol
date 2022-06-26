@@ -377,6 +377,82 @@ body {
     }
 }
 
+.encabezados{
+    margin-top: 45px;
+    font-size: 35px;
+    width: 100%;
+    height: 60px;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #FFF;
+    background-color: rgba(5, 62, 65, 0.9);
+    border-radius: 15px;
+}
+
+.formulario_registro{
+    width: 100%;
+    max-width: 100%;
+    margin-top: 5px;
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    background-color: rgba(5, 62, 65, 0.5);
+    border-radius: 15px;
+}
+
+.boton {
+    font-family: Arial;
+    color: #ffffff;
+    height: 35px;
+    padding: 5px 15px;
+    border-radius: 15px;
+    border: solid #053f41 1px;
+    background: #053e41de;
+}
+
+.boton:hover{
+    background:rgb(0, 128, 104);
+}
+
+.informacion {
+
+    font-family: 'Arial';
+    display: inline-block;
+    height: 35px;
+    width: auto;
+    cursor: pointer;
+    padding: 5px 15px;
+    outline: 0;
+    border: 1px solid #000000;
+    border-radius: 15px;
+    background: #f8f8f8;
+    color: rgb(62, 62, 62);
+    opacity: 90%;
+    text-align: center;
+}
+
+.informacion_cuenta {
+
+    font-family: 'Arial';
+    display: inline-block;
+    height: 35px;
+    width: 400px;
+    cursor: pointer;
+    padding: 5px 15px;
+    outline: 0;
+    border: 1px solid #000000;
+    border-radius: 15px;
+    background: #f8f8f8;
+    color: rgb(62, 62, 62);
+    opacity: 90%;
+    text-align: center;
+}
+
 
 ::-webkit-scrollbar {
     background: transparent;

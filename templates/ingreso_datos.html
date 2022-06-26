@@ -1,36 +1,48 @@
-{% block title %}
-    Registro de informacion
-{% endblock %}
+{%extends "layout.html"%}
 
-{% block main %}
+{% block Registros %}
 
+<div class="p-4">
+    <div class="welcome">
+        <div class="content rounded-3 p-3">
+            <h1 class="fs-3">Registro de información</h1>
+            <p class="mb-0">Desde acá puedes registrar tus gastos, ingresos y tus nuevas cuentas</p>
+        </div>
+    </div>
+
+    
     <a href={{url_for('graficos_tablas')}}>Resumen</a>
 
+    <div>
+        <h1 Class="encabezados">Registra todos tus ingresos</h1>
+    </div>
+
+    <div class="formulario_registro">
     <form action="/ingresos" method="post"> <!--Form para el registro de ingresos-->
     
-        <div class=""> 
-            
-            <select autofocus class="" name="ingreso_categoria" id="ingreso_categoria" placeholder="Categoria del ingreso"> <!--Lista desplegable para tipos de ingresos-->
+        <div class="">
+
+            <select autofocus class="informacion" name="ingreso_categoria" id="ingreso_categoria" placeholder="Categoria del ingreso"> <!--Lista desplegable para tipos de ingresos-->
                 <option value="1">Salario</option>
                 <option value="2">Mesada</option>
                 <option value="3">Regalos</option>
                 <option value="4">Otros</option>
             </select>
 
-            <select name="ingreso_cuenta" id="ingreso_cuenta">
+            <select class="informacion" name="ingreso_cuenta" id="ingreso_cuenta">
                 {% for i in cuentas %}
                 <option>{{ i.nombre_cuenta }}</option>
                 {% endfor %}
             </select>
            
-            <input autocomplete="off" autofocus class="" name="ingreso_monto" id="ingreso_monto" placeholder="Monto a ingresar" type="number" min="0.00"> <!--Ingresar el monto del ingreso-->
+            <input class="informacion" autocomplete="off" autofocus class="" name="ingreso_monto" id="ingreso_monto" placeholder="Monto a ingresar" type="number" min="0.00"> <!--Ingresar el monto del ingreso-->
            
-            <select autofocus class="" name="moneda_ing" id="moneda_ing" placeholder="Moneda"> <!--Lista desplegable para monedas-->
+            <select class="informacion" autofocus class="" name="moneda_ing" id="moneda_ing" placeholder="Moneda"> <!--Lista desplegable para monedas-->
                 <option value="NIO">NIO</option>
                 <option value="USD">USD</option>
             </select>
            
-            <select autofocus class="" name="ingreso_fecha" id="ingreso_fecha" placeholder="Mes del ingreso"> <!--Ingreso de fecha-->
+            <select class="informacion" autofocus class="" name="ingreso_fecha" id="ingreso_fecha" placeholder="Mes del ingreso"> <!--Ingreso de fecha-->
                 <option value="ENERO">ENERO</option>
                 <option value="FEBRERO">FEBRERO</option>
                 <option value="MARZO">MARZO</option>
@@ -45,15 +57,21 @@
                 <option value="DICIEMBRE">DICIEMBRE</option>
             </select>
 
-            <button type="submit">Registrar Ingreso</button>
+            <button class="boton" type="submit">Registrar Ingreso</button>
         </div>
     </form>
+    </div>
 
+    <div>
+        <h1 Class="encabezados">Registra todos tus gastos</h1>
+    </div>
+
+    <div class="formulario_registro">
     <form action="/egresos" method="post"> <!--Form para el registro de egresos-->
     
-        <div class=""> 
+        <div class="">
             
-            <select autofocus class="" name="egreso_categoria" id="egreso_categoria" placeholder="Categoria del egreso"> <!--Lista desplegable para tipos de egresos-->
+            <select class="informacion" autofocus class="" name="egreso_categoria" id="egreso_categoria" placeholder="Categoria del egreso"> <!--Lista desplegable para tipos de egresos-->
                 <option value="5">Comida</option>
                 <option value="6">Servicios basicos</option>
                 <option value="7">Universidad</option>
@@ -64,20 +82,20 @@
                 <option value="12">Varios</option>
             </select>
 
-            <select name="egreso_cuenta" id="egreso_cuenta">
+            <select class="informacion" name="egreso_cuenta" id="egreso_cuenta">
                 {% for i in cuentas %}
                 <option>{{ i.nombre_cuenta }}</option>
                 {% endfor %}
             </select>
            
-            <input autocomplete="off" autofocus class="" name="egreso_monto" id="egreso_monto" placeholder="Monto del egreso" type="number" min="0.00"> <!--Ingresar el monto del egreso-->
+            <input class="informacion" autocomplete="off" autofocus class="" name="egreso_monto" id="egreso_monto" placeholder="Monto del egreso" type="number" min="0.00"> <!--Ingresar el monto del egreso-->
            
-            <select autofocus class="" name="moneda_egr" id="moneda_egr" placeholder="Moneda"> <!--Lista desplegable para monedas-->
+            <select class="informacion" autofocus class="" name="moneda_egr" id="moneda_egr" placeholder="Moneda"> <!--Lista desplegable para monedas-->
                 <option value="NIO">NIO</option>
                 <option value="USD">USD</option>
             </select>
            
-            <select autofocus class="" name="egreso_fecha" id="egreso_fecha" placeholder="Mes del egreso"> <!--egreso de fecha-->
+            <select class="informacion" autofocus class="" name="egreso_fecha" id="egreso_fecha" placeholder="Mes del egreso"> <!--egreso de fecha-->
                 <option value="ENERO">ENERO</option>
                 <option value="FEBRERO">FEBRERO</option>
                 <option value="MARZO">MARZO</option>
@@ -92,14 +110,22 @@
                 <option value="DICIEMBRE">DICIEMBRE</option>
             </select>
            
-            <button type="submit">Registrar egreso</button>
+            <button class="boton" type="submit">Registrar egreso</button>
         </div>
     </form>
+    </div>
 
+    <div>
+        <h1 Class="encabezados">Registra todas tus cuentas</h1>
+    </div>
+
+    <div class="formulario_registro">
     <form action="/cuentas" method="post">
-        <input autocomplete="off" autofocus class="" name="cuenta_nombre" id="cuenta_nombre" placeholder="Ingrese el nombre de la cuenta" type="text">
+
+        <input class="informacion_cuenta" autocomplete="off" autofocus class="" name="cuenta_nombre" id="cuenta_nombre" placeholder="Ingrese el nombre de la cuenta" type="text">
         
-        <button type="submit">Registrar cuenta</button>
+        <button class="boton" type="submit">Registrar cuenta</button>
     </form>
+    </div>
 
 {% endblock %}
