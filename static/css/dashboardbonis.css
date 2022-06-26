@@ -339,23 +339,6 @@ body {
     float: left !important;
 }
 
-.navbar .navbar-nav>li>a>span:not(.caret) {
-    background-color: #e74c3c !important;
-    border-radius: 50% !important;
-    height: 25px !important;
-    width: 25px !important;
-    padding: 2px !important;
-    font-size: 11px !important;
-    position: relative !important;
-    top: -10px !important;
-    right: 5px !important
-}
-
-.dropdown-menu>li>a {
-    padding-top: 5px !important;
-    padding-right: 5px !important;
-}
-
 .navbar .navbar-nav>li>a>i {
     font-size: 18px !important;
 }
