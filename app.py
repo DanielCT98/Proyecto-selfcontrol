@@ -65,19 +65,20 @@ def graficos_tablas():
 
     resumen_cuentas = []
 
-    for i,j in zip(resumen_ingresos, resumen_egresos):
+    """ for i,j in zip(resumen_ingresos, resumen_egresos):
         
         if i["nombre_cuenta"] == j["nombre_cuenta"]:
             resumen_cuentas.append(i["nombre_cuenta"])
-            resumen_cuentas.append(i["Ingresos"] - j["Egresos"])
+            resumen_cuentas.append(i["Ingresos"] - j["Egresos"]) """
 
     consolidado_ingresos = db.execute("SELECT sum(monto) AS 'Total de ingresos' FROM ingresos WHERE id_usuario = ?;", session["id_usuario"])
     consolidado_egresos = db.execute("SELECT sum(monto) AS 'Total de egresos' FROM egresos WHERE id_usuario = ?;", session["id_usuario"])
 
-    saldo= []
 
-    for k,l in zip(consolidado_ingresos, consolidado_egresos):
-        saldo.append(k["Total de ingresos"] - l["Total de egresos"])
+    saldo= []
+    if consolidado_ingresos[0]["Total de ingresos"] != None and consolidado_egresos[0]["Total de egresos"] != None:
+        for k,l in zip(consolidado_ingresos, consolidado_egresos):
+            saldo.append(k["Total de ingresos"] - l["Total de egresos"])
 
     print(saldo)
 
