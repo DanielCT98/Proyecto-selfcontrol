@@ -4,151 +4,233 @@
 
 <div class="p-4">
   <div class="welcome">
-      <div class="content rounded-3 p-3">
-          <h1 class="fs-3">¡Bienvenido {{usuario}}!</h1>
-          <p class="mb-0">Hola {{usuario}}, bienvenido a tu asombroso dashboard!</p>
+    <div class="content rounded-3 p-3">
+      <h1 class="fs-3">¡Bienvenido {{usuario}}!</h1>
+      <p class="mb-0">Hola {{usuario}}, bienvenido a tu asombroso dashboard!</p>
+    </div>
+  </div>
+
+  <section class="statistics mt-4">
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="box d-flex rounded-2 align-items-center mb-4 mb-lg-0 p-3">
+          <i class="uil-envelope-shield fs-2 text-center bg-primary rounded-circle ingresoico"></i>
+          <div class="ms-3">
+            <span class="d-block ms-2">Ingresos</span>
+            <div class="d-flex align-items-center">
+              <h3 class="mb-0">NIO {{ consolidado_ingresos[0]["Total de ingresos"] }}</h3>
+            </div>
+            <div class="d-flex align-items-center">
+              <h3 class="mb-0">USD {{ consolidado_ingresos[0]["Total de ingresos"] }}</h3>
+            </div>
+          </div>
+        </div>
       </div>
-  </div>
-
-  <a href={{url_for('registros')}}> ingreso_datos </a>
-
-  <!--Total de ingresos-->
-  <div>
-    <h2>Total de ingresos</h2>
-    <h3>{{ consolidado_ingresos[0]["Total de ingresos"] }}</h3>
-  </div>
-  <!--Total de egresos-->
-  <div>
-    <h2>Total de egresos</h2>
-    <h3>{{ consolidado_egresos[0]["Total de egresos"] }}</h3>
-  </div>
-  <!--saldo-->
-  <div>
-    <h2>Balance</h2>
-    <h3>{{ saldo[0] }}</h3>
-  </div>
-
-  <!--grafico de egresos-->
-
-  <div style="width: 300px;">
-    <canvas id="grafico_egresos"></canvas>
-  </div>
-
-  <!--grafico de ingresos-->
-
-  <div style="width: 300px;">
-    <canvas id="grafico_ingresos"></canvas>
-  </div>
-
-    <!--grafico de mes-->
-
-    <div style="width: 600px;">
-      <canvas id="grafico_mes"></canvas>
+      <div class="col-lg-4">
+        <div class="box d-flex rounded-2 align-items-center mb-4 mb-lg-0 p-3">
+          <i class="uil-file fs-2 text-center bg-danger rounded-circle egresoico"></i>
+          <div class="ms-3">
+            <span class="d-block ms-2">Egresos</span>
+            <div class="d-flex align-items-center">
+              <h3 class="mb-0">C$ {{ consolidado_egresos[0]["Total de egresos"] }}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="box d-flex rounded-2 align-items-center p-3">
+          <i class="uil-users-alt fs-2 text-center bg-success rounded-circle"></i>
+          <div class="ms-3">
+            <span class="d-block ms-2">Balance</span>
+            <div class="d-flex align-items-center">
+              <h3 class="mb-0">C$ {{ saldo[0] }}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <!--cuentas y sus saldos-->
-
-    <div>
-      {% for i in resumen_cuentas %}          
-        <h2>{{[i][0]}}</h2>
-        <h3>{{[i][1]}}</h3>
-      {% endfor %}
+  <section class="charts mt-4">
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="chart-container rounded-2 p-3">
+          <h3 class="fs-6 mb-3">Ingresos</h3>
+          <div style="width: 300px;">
+            <canvas id="grafico_ingresos"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="chart-container rounded-2 p-3">
+          <h3 class="fs-6 mb-3">Egresos</h3>
+          <div style="width: 300px;">
+            <canvas id="grafico_egresos"></canvas>
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
 
-  <!--Tabla de ingresos-->
+  <section class="charts mt-4">
+    <div class="chart-container p-3">
+      <h3 class="fs-6 mb-3">Chart title number three</h3>
+      <div style="height: 300px">
+        <div style="width: 600px;">
+          <canvas id="grafico_mes"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <div> 
-    
-    <table class="">
-        <tr>
-          <th>Categoria</th>
-          <th>Monto</th>
-          <th>Mes</th>
-        </tr>
-        
-        {% for i in ultimos_ingresos%}
-        <tr>          
-          <td>{{i["categoria_i"]}}</td>
-          <td>{{i["monto"]}}</td>
-          <td>{{i["mes"]}}</td>
-        </tr>
-        {% endfor %}
-      </table>    
-</div>  
+  <section class="charts mt-4">
+    <div class="chart-container p-3">
+      <h3 class="fs-6 mb-3">Tabla ultimo 5 ingresos</h3>
+      <div style="height: 300px">
+        <div style="width: 600px;">
+          <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Categoria</th>
+                <th scope="col">Monto</th>
+                <th scope="col">Mes</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for i, j in ultimos_ingresos | zip(tam)%} 
+              <tr>
+                <td>{{j}}</td>
+                <td>{{i["categoria_i"]}}</td>
+                <td>{{i["monto"]}}</td>
+                <td>{{i["mes"]}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <!--Tabla de egresos-->
 
-  <div> 
-    
-    <table class="">
-        <tr>
-          <th>Categoria</th>
-          <th>Monto</th>
-          <th>Mes</th>
-        </tr>
+</div>
 
-        {% for i in ultimos_egresos%}
-        <tr>          
-          <td>{{i["categoria_e"]}}</td>
-          <td>{{i["monto"]}}</td>
-          <td>{{i["mes"]}}</td>
-        </tr>
-        {% endfor %}
-      </table>
+
+
+
+<a href={{url_for('registros')}}> ingreso_datos </a>
+
+
+<!--grafico de mes-->
+
+<div style="width: 600px;">
+  <canvas id="grafico_mes"></canvas>
+</div>
+
+<!--cuentas y sus saldos-->
+
+<div>
+  {% for i in resumen_cuentas %}
+  <h2>{{[i][0]}}</h2>
+  <h3>{{[i][1]}}</h3>
+  {% endfor %}
+</div>
+
+<!--Tabla de ingresos-->
+
+<div>
+
+  <table class="">
+    <tr>
+      <th>Categoria</th>
+      <th>Monto</th>
+      <th>Mes</th>
+    </tr>
+
+    {% for i in ultimos_ingresos%}
+    <tr>
+      <td>{{i["categoria_i"]}}</td>
+      <td>{{i["monto"]}}</td>
+      <td>{{i["mes"]}}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+
+<!--Tabla de egresos-->
+
+<div>
+
+  <table class="">
+    <tr>
+      <th>Categoria</th>
+      <th>Monto</th>
+      <th>Mes</th>
+    </tr>
+
+    {% for i in ultimos_egresos%}
+    <tr>
+      <td>{{i["categoria_e"]}}</td>
+      <td>{{i["monto"]}}</td>
+      <td>{{i["mes"]}}</td>
+    </tr>
+    {% endfor %}
+  </table>
 </div>
 
 <!--Tabla de cuentas-->
 
-<div> 
-    <table class="">
-      
-      <thead>
-        <th>Cuentas creadas</th>
-      </thead>
+<div>
+  <table class="">
 
-      <tbody>
-        {% for i in ultimas_cuentas %}
-        <tr>          
-          <td>{{i.nombre_cuenta}}</td>
-        </tr>
-        {% endfor %}
-      </tbody>  
-      
-    </table>
+    <thead>
+      <th>Cuentas creadas</th>
+    </thead>
+
+    <tbody>
+      {% for i in ultimas_cuentas %}
+      <tr>
+        <td>{{i.nombre_cuenta}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+
+  </table>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <!--Script para los egresos-->
 <script>
-    const ctx = document.getElementById('grafico_egresos').getContext('2d');
-    const myChart = new Chart(ctx, {
+  const ctx = document.getElementById('grafico_egresos').getContext('2d');
+  const myChart = new Chart(ctx, {
     type: 'pie',
     data: {
-        labels: {{categoria_egresos | safe}},
-        datasets: [{
-            label: 'categoria',
-            data: {{total_egresos | safe}},
-            backgroundColor: [
-                '#052D25',
-                '#08595D',
-                '#0A7075',
-                '#0ABD9D',
-                '#1D7425',
-                '#13DCE6',
-                '#30C93D',
-                '#9CF0F6'
-            ],
-            borderColor: [
-                '#052D25',
-                '#08595D',
-                '#0A7075',
-                '#0ABD9D',
-                '#1D7425',
-                '#13DCE6',
-                '#30C93D',
-                '#9CF0F6'
-            ],
+      labels: {{ categoria_egresos | safe}},
+  datasets: [{
+    label: 'categoria',
+    data: {{ total_egresos | safe}},
+    backgroundColor: [
+    '#052D25',
+    '#08595D',
+    '#0A7075',
+    '#0ABD9D',
+    '#1D7425',
+    '#13DCE6',
+    '#30C93D',
+    '#9CF0F6'
+  ],
+    borderColor: [
+    '#052D25',
+    '#08595D',
+    '#0A7075',
+    '#0ABD9D',
+    '#1D7425',
+    '#13DCE6',
+    '#30C93D',
+    '#9CF0F6'
+  ],
             
         }]
     },
@@ -158,34 +240,34 @@
 
 <!--Script para los ingresos-->
 <script>
-    const ctz = document.getElementById('grafico_ingresos').getContext('2d');
-    const myChart1 = new Chart(ctz, {
+  const ctz = document.getElementById('grafico_ingresos').getContext('2d');
+  const myChart1 = new Chart(ctz, {
     type: 'pie',
     data: {
-        labels: {{categoria_ingresos | safe}},
-        datasets: [{
-            label: 'categoria',
-            data: {{total_ingresos | safe}},
-            backgroundColor: [
-                '#052D25',
-                '#08595D',
-                '#0A7075',
-                '#0ABD9D',
-                '#1D7425',
-                '#13DCE6',
-                '#30C93D',
-                '#9CF0F6'
-            ],
-            borderColor: [
-                '#052D25',
-                '#08595D',
-                '#0A7075',
-                '#0ABD9D',
-                '#1D7425',
-                '#13DCE6',
-                '#30C93D',
-                '#9CF0F6'
-            ],
+      labels: {{ categoria_ingresos | safe}},
+  datasets: [{
+    label: 'categoria',
+    data: {{ total_ingresos | safe}},
+    backgroundColor: [
+    '#052D25',
+    '#08595D',
+    '#0A7075',
+    '#0ABD9D',
+    '#1D7425',
+    '#13DCE6',
+    '#30C93D',
+    '#9CF0F6'
+  ],
+    borderColor: [
+    '#052D25',
+    '#08595D',
+    '#0A7075',
+    '#0ABD9D',
+    '#1D7425',
+    '#13DCE6',
+    '#30C93D',
+    '#9CF0F6'
+  ],
             
         }]
     },
@@ -197,18 +279,18 @@
 <script>
   const cty = document.getElementById('grafico_mes').getContext('2d');
   const myChart2 = new Chart(cty, {
-  type: 'bar',
-  data: {
+    type: 'bar',
+    data: {
       labels: {{ meses | safe}},
-      datasets: [{
-          label: 'Ingresos',
-          data: {{ingresos_mes | safe}},
-          backgroundColor: [
-              '#0A7075'
-          ],
-          borderColor: [
-              '#0A7075'
-          ],
+  datasets: [{
+    label: 'Ingresos',
+    data: {{ ingresos_mes | safe}},
+    backgroundColor: [
+    '#0A7075'
+  ],
+    borderColor: [
+    '#0A7075'
+  ],
           
       }]
   },

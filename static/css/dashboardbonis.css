@@ -467,3 +467,10 @@ body {
 ::-webkit-scrollbar-thumb:hover {
     background-color: rgba(0, 0, 0, 0.3);
 }
+
+.ingresoico {
+    background-size: 65%;
+    background-position: center;
+    background-image: url("/static/img/metodo-de-pago.png");
+    background-repeat: no-repeat;
+}

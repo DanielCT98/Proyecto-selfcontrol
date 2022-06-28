@@ -10,6 +10,8 @@ from werkzeug.exceptions import default_exceptions, HTTPException, InternalServe
 
 app = Flask(__name__)
 
+app.jinja_env.filters['zip'] = zip
+
 # Configure session to use filesystem (instead of signed cookies)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
@@ -100,11 +102,11 @@ def graficos_tablas():
 
 #a partir de aca se va a poblar la tabla de resumen de egresos
 
-    ultimos_egresos = db.execute("SELECT monto, mes, categoria_e FROM egresos, categoria_egresos WHERE id_usuario = ? AND egresos.id_categoria_egr = categoria_egresos.id_categoria_egr ORDER BY id_egreso DESC;", session["id_usuario"])   
+    ultimos_egresos = db.execute("SELECT monto, mes, categoria_e FROM egresos, categoria_egresos WHERE id_usuario = ? AND egresos.id_categoria_egr = categoria_egresos.id_categoria_egr ORDER BY id_egreso DESC  LIMIT 5;", session["id_usuario"])   
 
 #a partir de aca se va a poblar la tabla de resumen de ingresos
 
-    ultimos_ingresos = db.execute("SELECT monto, mes, categoria_i FROM ingresos, categoria_ingresos WHERE id_usuario = ? AND ingresos.id_categoria_ing = categoria_ingresos.id_categoria_ing ORDER BY id_ingreso DESC;", session["id_usuario"])   
+    ultimos_ingresos = db.execute("SELECT monto, mes, categoria_i FROM ingresos, categoria_ingresos WHERE id_usuario = ? AND ingresos.id_categoria_ing = categoria_ingresos.id_categoria_ing ORDER BY id_ingreso DESC LIMIT 5;", session["id_usuario"])   
 
 #a partir de aca se crea el grafico de resumen de egresos
 
@@ -139,7 +141,7 @@ def graficos_tablas():
         meses.append(i["mes"])
         ingresos_mes.append(i["sum(monto)"])
 
-    return render_template("resumen.html",usuario=session["usuario_dato"], saldo=saldo ,consolidado_ingresos = consolidado_ingresos ,consolidado_egresos = consolidado_egresos ,resumen_cuentas = resumen_cuentas, meses=meses, ingresos_mes=ingresos_mes,categoria_ingresos=categoria_ingresos, total_ingresos=total_ingresos,categoria_egresos=categoria_egresos, total_egresos=total_egresos, ultimas_cuentas=ultimas_cuentas, ultimos_egresos=ultimos_egresos, ultimos_ingresos=ultimos_ingresos)
+    return render_template("resumen.html",tam = range(1 ,len(ultimos_ingresos)+1), usuario=session["usuario_dato"], saldo=saldo ,consolidado_ingresos = consolidado_ingresos ,consolidado_egresos = consolidado_egresos ,resumen_cuentas = resumen_cuentas, meses=meses, ingresos_mes=ingresos_mes,categoria_ingresos=categoria_ingresos, total_ingresos=total_ingresos,categoria_egresos=categoria_egresos, total_egresos=total_egresos, ultimas_cuentas=ultimas_cuentas, ultimos_egresos=ultimos_egresos, ultimos_ingresos=ultimos_ingresos)
 
 #funcion para redirigir al ingreso de datos
 @app.route("/ingreso_datos")
