@@ -44,8 +44,20 @@
 
 -- SELECT nombre_cuenta, sum(monto) as "Egresos" FROM cuentas, egresos WHERE egresos.id_usuario = 1 AND cuentas.id_cuenta = egresos.id_cuenta GROUP BY nombre_cuenta;
 
-SELECT sum(monto) AS 'Total de ingresos' FROM ingresos WHERE id_usuario = 1;
+-- SELECT sum(monto) AS 'Total de ingresos' FROM ingresos WHERE id_usuario = 1;
 
-SELECT sum(monto) AS 'Total de egresos' FROM egresos WHERE id_usuario = 1;
+-- SELECT sum(monto) AS 'Total de egresos' FROM egresos WHERE id_usuario = 1;
 
+-- SELECT sum(monto) AS 'Total de ingresos' FROM ingresos WHERE id_usuario = 1 AND moneda = 'NIO';
 
+-- SELECT sum(monto) AS 'Total de ingresos' FROM ingresos WHERE id_usuario = 1 AND moneda = 'USD';
+
+-- SELECT sum(monto), categoria_e FROM egresos, categoria_egresos WHERE id_usuario = 1 AND egresos.id_categoria_egr = categoria_egresos.id_categoria_egr GROUP BY categoria_e;
+
+-- SELECT sum(monto), categoria_e FROM egresos, categoria_egresos WHERE id_usuario = 1 AND egresos.id_categoria_egr = categoria_egresos.id_categoria_egr AND moneda = 'NIO' GROUP BY categoria_e;
+
+SELECT mes, avg(monto) FROM ingresos WHERE id_usuario = 1 GROUP BY mes;
+
+SELECT mes, avg(monto) FROM ingresos WHERE id_usuario AND moneda = 'NIO' = 1 GROUP BY mes;
+
+SELECT mes, avg(monto) FROM ingresos WHERE id_usuario AND moneda = 'USD' = 1 GROUP BY mes;

@@ -84,16 +84,31 @@ def graficos_tablas():
             resumen_cuentas.append(i["nombre_cuenta"])
             resumen_cuentas.append(i["Ingresos"] - j["Egresos"]) """
 
-    consolidado_ingresos = db.execute("SELECT sum(monto) AS 'Total de ingresos' FROM ingresos WHERE id_usuario = ?;", session["id_usuario"])
-    consolidado_egresos = db.execute("SELECT sum(monto) AS 'Total de egresos' FROM egresos WHERE id_usuario = ?;", session["id_usuario"])
+    #Cordobas
+
+    consolidado_ingresos_nio = db.execute("SELECT sum(monto) AS 'Total de ingresos NIO' FROM ingresos WHERE id_usuario = ? AND moneda = 'NIO';", session["id_usuario"])
+    consolidado_egresos_nio = db.execute("SELECT sum(monto) AS 'Total de egresos NIO' FROM egresos WHERE id_usuario = ? AND moneda = 'NIO' ;", session["id_usuario"])
 
 
-    saldo= []
-    if consolidado_ingresos[0]["Total de ingresos"] != None and consolidado_egresos[0]["Total de egresos"] != None:
-        for k,l in zip(consolidado_ingresos, consolidado_egresos):
-            saldo.append(k["Total de ingresos"] - l["Total de egresos"])
+    saldo_nio= []
+    if consolidado_ingresos_nio[0]["Total de ingresos NIO"] != None and consolidado_egresos_nio[0]["Total de egresos NIO"] != None:
+        for k,l in zip(consolidado_ingresos_nio, consolidado_egresos_nio):
+            saldo_nio.append(k["Total de ingresos NIO"] - l["Total de egresos NIO"])
 
-    print(saldo)
+    print(saldo_nio)
+
+        #Dolares
+
+    consolidado_ingresos_usd = db.execute("SELECT sum(monto) AS 'Total de ingresos USD' FROM ingresos WHERE id_usuario = ? AND moneda = 'USD';", session["id_usuario"])
+    consolidado_egresos_usd = db.execute("SELECT sum(monto) AS 'Total de egresos USD' FROM egresos WHERE id_usuario = ? AND moneda = 'USD' ;", session["id_usuario"])
+
+
+    saldo_usd= []
+    if consolidado_ingresos_usd[0]["Total de ingresos USD"] != None and consolidado_egresos_usd[0]["Total de egresos USD"] != None:
+        for k,l in zip(consolidado_ingresos_usd, consolidado_egresos_usd):
+            saldo_usd.append(k["Total de ingresos USD"] - l["Total de egresos USD"])
+
+    print(saldo_usd)
 
 
 #a partir de aca se va a poblar la tabla de cuentas
@@ -102,15 +117,15 @@ def graficos_tablas():
 
 #a partir de aca se va a poblar la tabla de resumen de egresos
 
-    ultimos_egresos = db.execute("SELECT monto, mes, categoria_e FROM egresos, categoria_egresos WHERE id_usuario = ? AND egresos.id_categoria_egr = categoria_egresos.id_categoria_egr ORDER BY id_egreso DESC  LIMIT 5;", session["id_usuario"])   
+    ultimos_egresos = db.execute("SELECT monto, mes, categoria_e, moneda FROM egresos, categoria_egresos WHERE id_usuario = ? AND egresos.id_categoria_egr = categoria_egresos.id_categoria_egr ORDER BY id_egreso DESC  LIMIT 5;", session["id_usuario"])   
 
 #a partir de aca se va a poblar la tabla de resumen de ingresos
 
-    ultimos_ingresos = db.execute("SELECT monto, mes, categoria_i FROM ingresos, categoria_ingresos WHERE id_usuario = ? AND ingresos.id_categoria_ing = categoria_ingresos.id_categoria_ing ORDER BY id_ingreso DESC LIMIT 5;", session["id_usuario"])   
+    ultimos_ingresos = db.execute("SELECT monto, mes, categoria_i, moneda FROM ingresos, categoria_ingresos WHERE id_usuario = ? AND ingresos.id_categoria_ing = categoria_ingresos.id_categoria_ing ORDER BY id_ingreso DESC LIMIT 5;", session["id_usuario"])   
 
-#a partir de aca se crea el grafico de resumen de egresos
+#a partir de aca se crea el grafico de resumen de egresos NIO
 
-    totales_egr = db.execute("SELECT sum(monto), categoria_e FROM egresos, categoria_egresos WHERE id_usuario = ? AND egresos.id_categoria_egr = categoria_egresos.id_categoria_egr GROUP BY categoria_e;", session["id_usuario"])
+    totales_egr = db.execute("SELECT sum(monto), categoria_e FROM egresos, categoria_egresos WHERE id_usuario = ? AND egresos.id_categoria_egr = categoria_egresos.id_categoria_egr AND moneda = 'NIO' GROUP BY categoria_e;", session["id_usuario"])
 
     categoria_egresos = []
     total_egresos = []
@@ -119,9 +134,9 @@ def graficos_tablas():
         categoria_egresos.append(i["categoria_e"])
         total_egresos.append(i["sum(monto)"])
 
-#a partir de aca se crea el grafico de resumen de ingresos
+#a partir de aca se crea el grafico de resumen de ingresos NIO
 
-    totales_ing = db.execute("SELECT sum(monto), categoria_i FROM ingresos, categoria_ingresos WHERE id_usuario = ? AND ingresos.id_categoria_ing = categoria_ingresos.id_categoria_ing GROUP BY categoria_i;", session["id_usuario"])
+    totales_ing = db.execute("SELECT sum(monto), categoria_i FROM ingresos, categoria_ingresos WHERE id_usuario = ? AND ingresos.id_categoria_ing = categoria_ingresos.id_categoria_ing AND moneda = 'NIO' GROUP BY categoria_i;", session["id_usuario"])
 
     categoria_ingresos = []
     total_ingresos = []
@@ -130,18 +145,51 @@ def graficos_tablas():
         categoria_ingresos.append(i["categoria_i"])
         total_ingresos.append(i["sum(monto)"])
 
-#a partir de aca se crea el grafico de resumen mensual
+#a partir de aca se crea el grafico de resumen de egresos USD
 
-    mensuales_ing = db.execute("SELECT mes, sum(monto) FROM ingresos WHERE id_usuario = ? GROUP BY mes;", session["id_usuario"])
+    totales_egr_usd = db.execute("SELECT sum(monto), categoria_e FROM egresos, categoria_egresos WHERE id_usuario = ? AND egresos.id_categoria_egr = categoria_egresos.id_categoria_egr AND moneda = 'USD' GROUP BY categoria_e;", session["id_usuario"])
+
+    categoria_egresos_usd = []
+    total_egresos_usd = []
+
+    for i in totales_egr_usd:
+        categoria_egresos_usd.append(i["categoria_e"])
+        total_egresos_usd.append(i["sum(monto)"])
+
+#a partir de aca se crea el grafico de resumen de ingresos USD
+
+    totales_ing_usd = db.execute("SELECT sum(monto), categoria_i FROM ingresos, categoria_ingresos WHERE id_usuario = ? AND ingresos.id_categoria_ing = categoria_ingresos.id_categoria_ing AND moneda = 'USD' GROUP BY categoria_i;", session["id_usuario"])
+
+    categoria_ingresos_usd = []
+    total_ingresos_usd = []
+
+    for i in totales_ing_usd:
+        categoria_ingresos_usd.append(i["categoria_i"])
+        total_ingresos_usd.append(i["sum(monto)"])
+
+#a partir de aca se crea el grafico de resumen mensual promedio de ingresos en cordobas
+
+    mensuales_ing = db.execute("SELECT mes, avg(monto) FROM ingresos WHERE id_usuario = ? AND moneda = 'NIO' GROUP BY mes;", session["id_usuario"])
 
     meses = []
     ingresos_mes = []
 
     for i in mensuales_ing:
         meses.append(i["mes"])
-        ingresos_mes.append(i["sum(monto)"])
+        ingresos_mes.append(i["avg(monto)"])
 
-    return render_template("resumen.html",tam = range(1 ,len(ultimos_ingresos)+1), usuario=session["usuario_dato"], saldo=saldo ,consolidado_ingresos = consolidado_ingresos ,consolidado_egresos = consolidado_egresos ,resumen_cuentas = resumen_cuentas, meses=meses, ingresos_mes=ingresos_mes,categoria_ingresos=categoria_ingresos, total_ingresos=total_ingresos,categoria_egresos=categoria_egresos, total_egresos=total_egresos, ultimas_cuentas=ultimas_cuentas, ultimos_egresos=ultimos_egresos, ultimos_ingresos=ultimos_ingresos)
+#a partir de aca se crea el grafico de resumen mensual promedio de ingresos en dolares
+
+    mensuales_ing_usd = db.execute("SELECT mes, avg(monto) FROM ingresos WHERE id_usuario = ? AND moneda = 'USD' GROUP BY mes;", session["id_usuario"])
+
+    meses_usd = []
+    ingresos_mes_usd = []
+
+    for i in mensuales_ing_usd:
+        meses_usd.append(i["mes"])
+        ingresos_mes_usd.append(i["avg(monto)"])
+
+    return render_template("resumen.html", ingresos_mes_usd=ingresos_mes_usd ,total_egresos_usd=total_egresos_usd, total_ingresos_usd=total_ingresos_usd, categoria_egresos_usd=categoria_egresos_usd, categoria_ingresos_usd=categoria_ingresos_usd, consolidado_ingresos_usd = consolidado_ingresos_usd , consolidado_egresos_usd = consolidado_egresos_usd ,saldo_usd = saldo_usd,tam = range(1 ,len(ultimos_ingresos)+1), usuario=session["usuario_dato"], saldo_nio=saldo_nio ,consolidado_ingresos_nio = consolidado_ingresos_nio ,consolidado_egresos_nio = consolidado_egresos_nio ,resumen_cuentas = resumen_cuentas, meses=meses, ingresos_mes=ingresos_mes,categoria_ingresos=categoria_ingresos, total_ingresos=total_ingresos,categoria_egresos=categoria_egresos, total_egresos=total_egresos, ultimas_cuentas=ultimas_cuentas, ultimos_egresos=ultimos_egresos, ultimos_ingresos=ultimos_ingresos)
 
 #funcion para redirigir al ingreso de datos
 @app.route("/ingreso_datos")

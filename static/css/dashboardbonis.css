@@ -43,6 +43,12 @@ body {
 /** --------------------------------
  -- Sidebar
 -------------------------------- */
+@media screen and (max-width: 820px) {
+    .sidebar{
+        display: none;
+    }
+}
+
 .sidebar {
     width: var(--sidebar-width);
     transition: all .3s ease-in-out;
@@ -193,6 +199,7 @@ body {
 -------------------------------- */
 .charts .chart-container {
     background-color: var(--dk-dark-bg);
+    overflow: hidden;
 }
 
 .charts .chart-container h3 {
@@ -453,6 +460,10 @@ body {
     text-align: center;
 }
 
+.grafico_pos{
+    float: left;
+}
+
 
 ::-webkit-scrollbar {
     background: transparent;
@@ -473,4 +484,36 @@ body {
     background-position: center;
     background-image: url("/static/img/metodo-de-pago.png");
     background-repeat: no-repeat;
+}
+
+@media screen and (min-width: 820px) {
+    .temporal{
+        display: none;
+    }
+    .temp{
+        display: none;
+    }
+}
+
+.temp{
+    margin-left: 25%;
+    margin-right: auto;
+    justify-content: center;
+    width: 100%;
+}
+
+.temporal{
+    font-family: Arial;
+    color: #ffffff;
+    height: 35px;
+    padding: 5px 15px;
+    border-radius: 15px;
+    border: solid #053f41 1px;
+    background: #053e41de;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
