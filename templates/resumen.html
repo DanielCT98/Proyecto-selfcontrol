@@ -16,7 +16,7 @@
         <div class="box d-flex rounded-2 align-items-center mb-4 mb-lg-0 p-3">
           <i class="uil-envelope-shield fs-2 text-center bg-primary rounded-circle ingresoico"></i>
           <div class="ms-3">
-            <span class="d-block ms-2">Ingresos</span>
+            <span class="d-block ms-2" style="color: white;">Ingresos</span>
             <div class="d-flex align-items-center">
               <h3 class="mb-0">NIO {{ consolidado_ingresos_nio[0]["Total de ingresos NIO"] }}</h3>
             </div>
@@ -30,7 +30,7 @@
         <div class="box d-flex rounded-2 align-items-center mb-4 mb-lg-0 p-3">
           <i class="uil-file fs-2 text-center bg-danger rounded-circle egresoico"></i>
           <div class="ms-3">
-            <span class="d-block ms-2">Egresos</span>
+            <span class="d-block ms-2" style="color: white;">Egresos</span>
             <div class="d-flex align-items-center">
               <h3 class="mb-0">NIO {{ consolidado_egresos_nio[0]["Total de egresos NIO"] }}</h3>
             </div>
@@ -44,7 +44,7 @@
         <div class="box d-flex rounded-2 align-items-center p-3">
           <i class="uil-users-alt fs-2 text-center bg-success rounded-circle"></i>
           <div class="ms-3">
-            <span class="d-block ms-2">Balance</span>
+            <span class="d-block ms-2" style="color: white;">Balance</span>
             <div class="d-flex align-items-center">
               <h3 class="mb-0">NIO {{ saldo_nio[0] }}</h3>
             </div>
@@ -68,11 +68,11 @@
         <div class="chart-container rounded-2 p-3">
           
           <div class="grafico_pos" style="width: 300px;">
-            <h3 class="fs-6 mb-3">Ingresos Cordobas</h3>
+            <h3 class="fs-6 mb-3" style="color: white;">Ingresos Cordobas</h3>
             <canvas id="grafico_ingresos"></canvas>
           </div>
           <div class="grafico_pos" style="width: 300px;">
-            <h3 class="fs-6 mb-3">Ingresos Dolares</h3>
+            <h3 class="fs-6 mb-3" style="color: white;">Ingresos Dolares</h3>
             <canvas id="grafico_ingresos_usd"></canvas>
           </div>
         </div>
@@ -80,11 +80,11 @@
       <div class="col-lg-6">
         <div class="chart-container rounded-2 p-3">
           <div class="grafico_pos" style="width: 300px;">
-            <h3 class="fs-6 mb-3">Egresos Cordobas</h3>
+            <h3 class="fs-6 mb-3" style="color: white;">Egresos Cordobas</h3>
             <canvas id="grafico_egresos"></canvas>
           </div>
           <div class="grafico_pos" style="width: 300px;">
-            <h3 class="fs-6 mb-3">Egresos Dolares</h3>
+            <h3 class="fs-6 mb-3" style="color: white;">Egresos Dolares</h3>
             <canvas id="grafico_egresos_usd"></canvas>
           </div>
         </div>
@@ -94,7 +94,7 @@
 
   <section class="charts mt-4">
     <div class="chart-container p-3">
-      <h3 class="fs-6 mb-3">Promedio de ingresos</h3>
+      <h3 class="fs-6 mb-3" style="color: white;">Promedio de ingresos</h3>
       <div style="height: 300px;">
         <div style="width: 600px;">
           <canvas id="grafico_mes"></canvas>
@@ -105,10 +105,10 @@
 
   <section class="charts mt-4" id="tabla_ing">
     <div class="chart-container p-3">
-      <h3 class="fs-6 mb-3">Tabla ultimo 5 ingresos</h3>
+      <h3 class="fs-6 mb-3" style="color: white;">Tabla ultimo 5 ingresos</h3>
       <div style="height: 100%;">
         <div style="width: 100%;">
-          <table class="table">
+          <table class="table" style="color: white;">
             <thead class="thead-dark">
               <tr>
                 <th scope="col">#</th>
@@ -137,10 +137,10 @@
 
   <section class="charts mt-4" id="tabla_egr">
     <div class="chart-container p-3">
-      <h3 class="fs-6 mb-3">Tabla ultimo 5 egresos</h3>
+      <h3 class="fs-6 mb-3" style="color: white;">Tabla ultimo 5 egresos</h3>
       <div style="height: 100%;">
         <div style="width: 100%;">
-          <table class="table">
+          <table class="table" style="color: white;">
             <thead class="thead-dark">
               <tr>
                 <th scope="col">#</th>
@@ -169,10 +169,10 @@
 
   <section class="charts mt-4" id="tabla_cts">
     <div class="chart-container p-3">
-      <h3 class="fs-6 mb-3">Tabla de cuentas creadas</h3>
+      <h3 class="fs-6 mb-3" style="color: white;">Tabla de cuentas creadas</h3>
       <div style="height: 100%;">
         <div style="width: 100%;">
-          <table class="table">
+          <table class="table" style="color: white;">
             <thead class="thead-dark">
               <tr>
                 <th scope="col">#</th>
