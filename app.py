@@ -228,7 +228,7 @@ def registro_egresos():
         cuenta_egr = cuenta_e[0]["id_cuenta"]
 
         db.execute("INSERT INTO egresos (id_usuario, id_cuenta, id_categoria_egr, monto, moneda, mes) VALUES (?,?,?,?,?,?);",session["id_usuario"],int(cuenta_egr),egreso, monto_e, moneda_e, fecha_e)
-        return render_template("ingreso_datos.html")
+        return redirect("/ingreso_datos")
 
 #Funcion para registrar cuentas
 @app.route("/cuentas", methods = ["POST"])
