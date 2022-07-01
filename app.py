@@ -38,7 +38,7 @@ def register():
         confirmacion = request.form.get("confirmation")
         if password == "" or password != confirmacion:
             return render_template("error.html")
-        session["id_usuario"] = db.execute("INSERT INTO usuarios (correo, usuario, password) VALUES (?, ?, ?)", correo, usuario, password)
+        session["id_usuario"] = db.execute("INSERT INTO usuarios (correo, usuario, password) VALUES (?, ?, ?)", correo, usuario, generate_password_hash(password))
         session["usuario_dato"]=usuario
     return render_template("register.html")
 
@@ -50,11 +50,11 @@ def login():
         if not request.form.get("username"):
             return render_template("error.html")
         elif not request.form.get("password"):
-            return render_template("error.html")
+            return redirect("/error")
 
         rows = db.execute("SELECT * FROM usuarios WHERE usuario = ?", request.form.get("username"))
-        if len(rows) != 1 or not (rows[0]["password"], request.form.get("password")):
-            return render_template("error.html")
+        if len(rows) != 1 or not check_password_hash(rows[0]["password"], request.form.get("password")):
+            return redirect("/error")
 
         session["id_usuario"] = rows[0]["id_usuario"]
         session["usuario_dato"]= request.form.get("username")
@@ -197,6 +197,10 @@ def registros():
     cuentas = db.execute("SELECT nombre_cuenta FROM cuentas WHERE id_usuario = ? ORDER BY id_cuenta ASC;", session["id_usuario"])
     
     return render_template("ingreso_datos.html", cuentas=cuentas)
+
+@app.route("/error")
+def error():
+    return render_template("error.html")
 
 #Funcion para registrar datos de ingresos
 @app.route("/ingresos", methods = ["POST"])
