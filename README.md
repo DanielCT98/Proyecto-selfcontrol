@@ -14,6 +14,12 @@
 ###  Funcionamiento del registro de información:
 #### *Se habilitó un html dedicado al registro de información por parte del usuario, es decir, mediante los elementos desplegados en esta página, el usuario es capaz de insertar en nuestra base de datos, sus ingresos por categoría, sus egresos y las cuentas que desea afectar, esto permite un mejor control de la información al momento de realizar las segmentaciones de consulta, además que da lugar a futuras caracteristicas que darán una mejor experiencia al usuario.*
 
+###  Funcionamiento del login y register:
+#### *Una de las partes esenciales de este proyecto es tener la capacidad de poder ingresar distintos usuarios a la aplicación para poder llevar su control financiero, para ello se diseñaron funciones de login y de register, dichas funciones cumplen con el rol de obtener información suministrada por el usuario en el html, y mediante un get element by Id se almacenan en distintas variables que se insertaran en la base de datos diseñada para este proyecto, uno de los principales aditivos a estas funciones, es el uso de hash, lo que permite codificar la contraseña del usuario, evitando ciertas vulnerabilidades que pueden ocurrir al no hacer uso de la codificación de contraseña*
+
+###  Funcionamiento de la base de datos:
+#### *la base de datos de este proyecto se trabajó mediante sqlite3 debido a que da la facilidad de poder trabajar de forma local y desde la consola, facilitando el prediseño de los querys que dan lugar a la obtención de información, a su vez, se utilizó una aplicación web que permitio la estructuración de la base de datos para poder entender y generar una referencia gráfica de las dependencias y relaciones que se generaban en las distintas tablas contenidas. Nuestra base de datos cuenta con un total de 7 tablas distintas que permiten mantener más ordenada la información necesaria para el proyecto*
+
 ### Tecnologías utilizadas:
 #### *Para el desarrollo de este proyecto, fueron utilizadas las siguientes herramientas:*
 #### *-JavaScript*
