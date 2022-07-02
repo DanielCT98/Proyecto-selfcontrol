@@ -94,10 +94,20 @@
 
   <section class="charts mt-4">
     <div class="chart-container p-3">
-      <h3 class="fs-6 mb-3" style="color: white;">Promedio de ingresos</h3>
-      <div style="height: 300px;">
-        <div style="width: 600px;">
-          <canvas id="grafico_mes"></canvas>
+      <div class="grafico_pos">
+        <h3 class="fs-6 mb-3" style="color: white;">Promedio de ingresos en córdobas</h3>
+        <div style="height: 300px;">
+          <div style="width: 600px;">
+            <canvas id="grafico_mes"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="grafico_pos">
+        <h3 class="fs-6 mb-3" style="color: white;">Promedio de ingresos en dólares</h3>
+        <div style="height: 300px;">
+          <div style="width: 600px;">
+            <canvas id="grafico_mes_usd"></canvas>
+          </div>
         </div>
       </div>
     </div>
@@ -231,7 +241,9 @@
             
         }]
     },
-    
+  options: {
+    color: '#FFFFFF'
+  },
 });
 </script>
 
@@ -267,7 +279,9 @@
             
         }]
     },
-    
+  options: {
+    color: '#FFFFFF'
+  },  
 });
 </script>
 
@@ -304,7 +318,9 @@
             
         }]
     },
-    
+  options: {
+    color: '#FFFFFF'
+  },  
 });
 </script>
 
@@ -340,7 +356,9 @@
             
         }]
     },
-    
+  options: {
+    color: '#FFFFFF'
+  },  
 });
 </script>
 
@@ -361,20 +379,39 @@
     '#4285F4'
   ],
           
-      },{
-        label: 'Promedio de ingresos $',
-        data: {{ ingresos_mes_usd | safe}},
-        backgroundColor: [
-        '#EA4335'
-      ],
-        borderColor: [
-        '#EA4335'
-      ],
-              
-          }]
+      }]
   },
+options: {
+   color: '#FFFFFF'
+},
   
 });
+</script>
+
+<!--Script para los meses-->
+<script>
+  const vbn = document.getElementById('grafico_mes_usd').getContext('2d');
+  const myChart5 = new Chart(vbn, {
+    type: 'bar',
+    data: {
+      labels: {{ meses_usd | safe}},
+  datasets: [{
+    label: 'Promedio de ingresos $',
+    data: {{ ingresos_mes_usd | safe}},
+    backgroundColor: [
+    '#EA4335'
+  ],
+    borderColor: [
+    '#EA4335'
+  ],
+          
+      }]
+  },
+options: {
+  color: '#FFFFFF'
+},
+});
+
 </script>
 
 <script src="/static/js/dashboardbonis.js"></script>
