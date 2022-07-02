@@ -37,7 +37,7 @@
                 {% endfor %}
             </select>
            
-            <input class="informacion" autocomplete="off" autofocus class="" name="ingreso_monto" id="ingreso_monto" placeholder="Monto a ingresar" type="number" min="0.00"> <!--Ingresar el monto del ingreso-->
+            <input class="informacion" autocomplete="off" autofocus class="" name="ingreso_monto" id="ingreso_monto" placeholder="Monto a ingresar" type="number" min="0.00" required> <!--Ingresar el monto del ingreso-->
            
             <select class="informacion" autofocus class="" name="moneda_ing" id="moneda_ing" placeholder="Moneda"> <!--Lista desplegable para monedas-->
                 <option value="NIO">NIO</option>
@@ -90,7 +90,7 @@
                 {% endfor %}
             </select>
            
-            <input class="informacion" autocomplete="off" autofocus class="" name="egreso_monto" id="egreso_monto" placeholder="Monto del egreso" type="number" min="0.00"> <!--Ingresar el monto del egreso-->
+            <input class="informacion" autocomplete="off" autofocus class="" name="egreso_monto" id="egreso_monto" placeholder="Monto del egreso" type="number" min="0.00" required> <!--Ingresar el monto del egreso-->
            
             <select class="informacion" autofocus class="" name="moneda_egr" id="moneda_egr" placeholder="Moneda"> <!--Lista desplegable para monedas-->
                 <option value="NIO">NIO</option>
@@ -124,7 +124,7 @@
     <div class="formulario_registro">
     <form action="/cuentas" method="post">
 
-        <input class="informacion_cuenta" autocomplete="off" autofocus class="" name="cuenta_nombre" id="cuenta_nombre" placeholder="Ingrese el nombre de la cuenta" type="text">
+        <input class="informacion_cuenta" autocomplete="off" autofocus class="" name="cuenta_nombre" id="cuenta_nombre" placeholder="Ingrese el nombre de la cuenta" type="text" required>
         
         <button class="boton" type="submit">Registrar cuenta</button>
     </form>
